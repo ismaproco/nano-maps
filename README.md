@@ -11,6 +11,13 @@ Development Process
  - underscore: For JavaScript utility methods.
  - bootstrap: Framework for response development.
 
+- Then I try to implement a basic HTML mockup page using bootstrap, for this I made a heavy use of the bootstrap documentation, specially to implement the header navigation bar, and the columns layout of the page.
+
+- Then I try to add the google map to the page, again I had to go to the google map api to know how to add the map to the project. In this part I create a api secret to be able to load the map in the page.
+
+- Then I start to look experiment with the google map object to center the map in the location that I want to use for the neighborhood in the application, this was done changing the latitude and longitude coordinates of the google map object and increasing the zoom value.
+
+- Then I added the basic file structure to start using KnockoutJS, for this I used the "Getting Started" Guide of the knockoutJS page, with that in place and the knowledge gathered through the JavaScript Pattern course I created the basic scripts for the (models and ViewModels).
 
 
 Resources
@@ -31,3 +38,7 @@ http://stackoverflow.com/questions/485827/css-100-height-with-padding-margin
 - use the google maps API to add the map to the page.
 
 https://developers.google.com/maps/documentation/javascript/tutorial
+
+- Getting started Guide of knockoutJS
+
+http://knockoutjs.com/documentation/introduction.html
