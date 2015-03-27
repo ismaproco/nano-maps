@@ -19,6 +19,8 @@ Development Process
 
 - Then I added the basic file structure to start using KnockoutJS, for this I used the "Getting Started" Guide of the knockoutJS page, with that in place and the knowledge gathered through the JavaScript Pattern course I created the basic scripts for the (models and ViewModels).
 
+- With the folder structure defined and the files in place, I created the Gruntfile.js to created a realease build using grunt.
+
 
 Resources
 ---------
