@@ -34,7 +34,7 @@ module.exports = function (grunt) {
                 files: {
                     'build/js/app.js': ['src/js/app.js'],
                     'build/js/maker.js': ['src/js/maker.js'],
-                    'build/js/viewmodel.js': ['src/js/viewmodel.js']
+                    'build/js/viewmodel.js': ['src/js/viewmodel.js'],
                     'build/js/models/maker.js': ['src/js/models/maker.js']
                 }
             }
