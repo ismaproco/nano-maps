@@ -35,7 +35,12 @@ module.exports = function (grunt) {
                     'build/js/app.js': ['src/js/app.js'],
                     'build/js/maker.js': ['src/js/maker.js'],
                     'build/js/viewmodel.js': ['src/js/viewmodel.js'],
-                    'build/js/models/maker.js': ['src/js/models/maker.js']
+                    'build/js/models/maker.js': ['src/js/models/maker.js'],
+                    // distribution libraries
+                    'build/bower_components/jquery/jquery.js': ['src/bower_components/models/maker.js'],
+                    'build/bower_components/bootstrap/dist/js/bootstrap.js': ['src/bootstrap/dist/js/bootstrap.js'],
+                    'build/bower_components/knockout/dist/knockout.js': ['src/bower_components/knockout/dist/knockout.js'],
+                    'build/bower_components/underscore/underscore.js': ['src/bower_components/underscore/underscore.js']
                 }
             }
         },
@@ -63,5 +68,5 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
     grunt.loadNpmTasks('grunt-contrib-imagemin');
 
-    grunt.registerTask('default', ['cssmin', 'uglify','htmlmin','imagemin']);
+    grunt.registerTask('default', ['cssmin', 'uglify','uglify','htmlmin','imagemin']);
 };
