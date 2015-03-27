@@ -1,0 +1,1 @@
+var ViewModel=function(makers){this.makers=ko.observableArray(makers.map(function(maker){return new Maker}))};
