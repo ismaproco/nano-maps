@@ -3,6 +3,16 @@ var mozjpeg = require('imagemin-mozjpeg');
 module.exports = function (grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        copy: {
+            dist: {
+                files: [{
+                    expand: true,
+                    cwd: 'src/bower_components/bootstrap/dist/fonts/',
+                    src: '*',
+                    dest: 'build/bower_components/bootstrap/dist/fonts/'
+                }]
+            }
+        },
         cssmin: {
             target: {
                     files: [{
@@ -10,6 +20,15 @@ module.exports = function (grunt) {
                     cwd: 'src/css',
                     src: ['*.css', '!*.min.css'],
                     dest: 'build/css',
+                    ext: '.css'
+                }]
+            },
+            dist: {
+                    files: [{
+                    expand: true,
+                    cwd: 'src/bower_components/bootstrap/dist/css/',
+                    src: ['*.css', '!*.min.css'],
+                    dest: 'build/bower_components/bootstrap/dist/css/',
                     ext: '.css'
                 }]
             }
@@ -37,8 +56,8 @@ module.exports = function (grunt) {
                     'build/js/viewmodel.js': ['src/js/viewmodel.js'],
                     'build/js/models/maker.js': ['src/js/models/maker.js'],
                     // distribution libraries
-                    'build/bower_components/jquery/jquery.js': ['src/bower_components/models/maker.js'],
-                    'build/bower_components/bootstrap/dist/js/bootstrap.js': ['src/bootstrap/dist/js/bootstrap.js'],
+                    'build/bower_components/jquery/jquery.js': ['src/bower_components/jquery/jquery.js'],
+                    'build/bower_components/bootstrap/dist/js/bootstrap.js': ['src/bower_components/bootstrap/dist/js/bootstrap.js'],
                     'build/bower_components/knockout/dist/knockout.js': ['src/bower_components/knockout/dist/knockout.js'],
                     'build/bower_components/underscore/underscore.js': ['src/bower_components/underscore/underscore.js']
                 }
@@ -61,6 +80,7 @@ module.exports = function (grunt) {
         }
     });
 
+    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
@@ -68,5 +88,5 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
     grunt.loadNpmTasks('grunt-contrib-imagemin');
 
-    grunt.registerTask('default', ['cssmin', 'uglify','uglify','htmlmin','imagemin']);
+    grunt.registerTask('default', ['copy:dist','cssmin', 'uglify','uglify','htmlmin','imagemin']);
 };
