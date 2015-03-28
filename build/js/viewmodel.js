@@ -1,1 +1,1 @@
-var ViewModel=function(makers){makers=makers||[];this.makers=ko.observableArray(makers.map(function(maker){return new Maker}))};
+var ViewModel=function(makers,map){makers=makers||[];this.map=map;this.makers=ko.observableArray(makers.map(function(maker){return new Maker}));this.currentMaker=ko.observable();this.saveMaker=function(){var maker=this.currentMaker()};this.mapClick=function(map,event){var lat=event.latLng.lat();var lng=event.latLng.lng();console.log("Lat="+lat+"; Lng="+lng)};this.markerClick=function(marker,event){};this.writeLog=function(text){console.log(text)}};

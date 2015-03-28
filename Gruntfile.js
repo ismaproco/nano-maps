@@ -54,7 +54,7 @@ module.exports = function (grunt) {
                     'build/js/app.js': ['src/js/app.js'],
                     'build/js/maker.js': ['src/js/maker.js'],
                     'build/js/viewmodel.js': ['src/js/viewmodel.js'],
-                    'build/js/models/maker.js': ['src/js/models/maker.js'],
+                    'build/js/models/marker.js': ['src/js/models/marker.js'],
                     // distribution libraries
                     'build/bower_components/jquery/jquery.js': ['src/bower_components/jquery/jquery.js'],
                     'build/bower_components/bootstrap/dist/js/bootstrap.js': ['src/bower_components/bootstrap/dist/js/bootstrap.js'],
