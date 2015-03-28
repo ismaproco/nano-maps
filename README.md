@@ -21,6 +21,13 @@ Development Process
 
 - With the folder structure defined and the files in place, I created the Gruntfile.js to created a realease build using grunt.
 
+- To add the map to the page I follow the basic example of the google maps api documentations, was just matter of add some custom code to the app.js to select the map element and the maps API do the loading.
+
+- With the map in full screen, some locations were shown by default like hotels and restaurants I wanted to hide them, because that was part of the project, I found this handy solution on StackOverflow
+http://stackoverflow.com/questions/7396722/hide-local-listings-from-google-maps-api
+
+- Then I was thinking about the best possible way to separate the google maps methods and the application information, in this way the MVVM pattern will be applied, was quite hard to this because many maps methods are things that I consider part of the ViewModel, but after try and error, I approach for a better solution that is to use the google maps methods as a View in my ViewModel, so events and references will be linked to the ViewModel and not part of it.
+
 
 Resources
 ---------
