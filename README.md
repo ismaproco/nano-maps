@@ -28,6 +28,10 @@ http://stackoverflow.com/questions/7396722/hide-local-listings-from-google-maps-
 
 - Then I was thinking about the best possible way to separate the google maps methods and the application information, in this way the MVVM pattern will be applied, was quite hard to this because many maps methods are things that I consider part of the ViewModel, but after try and error, I approach for a better solution that is to use the google maps methods as a View in my ViewModel, so events and references will be linked to the ViewModel and not part of it.
 
+- I try to implement a menu to control when a marker was added in the map, but I wanted to do it inside the map, above the marker so it will work as a map element, I found a library of google that overrides the default infobox and allows to add custom styling and HTML. Using the new library I create a custom Infobox for the map with the HTML menu of marker type.
+
+- After testing the infobox I realize i was breaking the in some way the MVVM pattern in the way I was interacting with the menu, so I start to create a HTML template for the menu, and manage of operations from the knockoutJS library.
+
 
 Resources
 ---------
@@ -48,10 +52,10 @@ http://stackoverflow.com/questions/485827/css-100-height-with-padding-margin
 
 https://developers.google.com/maps/documentation/javascript/tutorial
 
-- Getting started Guide of knockoutJS
+- Getting started Guide of knockoutJS.
 
 http://knockoutjs.com/documentation/introduction.html
 
-- Infobox library that overrides the default infobox control of the maps api
+- Infobox library that overrides the default infobox control of the maps api.
 
 https://code.google.com/p/google-maps-utility-library-v3/
