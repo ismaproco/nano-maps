@@ -55,6 +55,7 @@ module.exports = function (grunt) {
                     'build/js/maker.js': ['src/js/maker.js'],
                     'build/js/viewmodel.js': ['src/js/viewmodel.js'],
                     'build/js/models/marker.js': ['src/js/models/marker.js'],
+                    'build/js/infobox.js': ['src/js/infobox.js'],
                     // distribution libraries
                     'build/bower_components/jquery/jquery.js': ['src/bower_components/jquery/jquery.js'],
                     'build/bower_components/bootstrap/dist/js/bootstrap.js': ['src/bower_components/bootstrap/dist/js/bootstrap.js'],
@@ -72,9 +73,9 @@ module.exports = function (grunt) {
                 },
                 files: [{
                     expand: true,                  // Enable dynamic expansion
-                    cwd: 'src/img',                   // Src matches are relative to this path
+                    cwd: 'src/images',                   // Src matches are relative to this path
                     src: ['**/*.{png,jpg,gif}'],   // Actual patterns to match
-                    dest: 'build/img'                  // Destination path prefix
+                    dest: 'build/images'                  // Destination path prefix
                 }]
             }
         }

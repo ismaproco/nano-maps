@@ -51,3 +51,7 @@ https://developers.google.com/maps/documentation/javascript/tutorial
 - Getting started Guide of knockoutJS
 
 http://knockoutjs.com/documentation/introduction.html
+
+- Infobox library that overrides the default infobox control of the maps api
+
+https://code.google.com/p/google-maps-utility-library-v3/
