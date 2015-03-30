@@ -36,6 +36,10 @@ http://stackoverflow.com/questions/7396722/hide-local-listings-from-google-maps-
 Resources
 ---------
 
+- Forum post that shows how the application should look, very helpfull to have an idea of what to expect.
+
+https://github.com/udacity/fend-office-hours/tree/master/Javascript%20Design%20Patterns/P5%20Project%20Overview
+
 - I was struggling finiding a good way to implement a header in html that was reponsive, using bootstrap, and I found this awesome description in the bootstrap documentation. 
 
 http://getbootstrap.com/components/#navbar
