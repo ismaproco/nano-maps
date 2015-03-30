@@ -1,3 +1,5 @@
+var viewModel;
+
 // Initialize google map
 function initialize() {
         var mapOptions = {
@@ -21,11 +23,11 @@ function initialize() {
         // set the style to the map
         map.setOptions({styles: noPoi});
 
-        //initialize saved makers
-        var makers = [];
+        // disable double click
+        map.setOptions({disableDoubleClickZoom: true });
 
         // create the ViewModel with the created makers and current map
-        var viewModel = new ViewModel(makers, map);
+        viewModel = new ViewModel( markers, markerTypes , map);
         // bind a new instance of the viewModel to the page
         ko.applyBindings(viewModel);        
 
@@ -36,8 +38,6 @@ function initialize() {
 
 
         addMakers(map);
-
-
 }
 
 // attach the initialize to the page load
@@ -53,6 +53,10 @@ function addMakers(map)
       icon: pinImage,
       title: 'Hello World!'
     });
+
+
+
+/*
 
     function createMarkerType( type, url, title  )
     {
@@ -77,9 +81,10 @@ function addMakers(map)
     $.each( markerTypes, function( index, item ) { 
         contentHTML += createMarkerType( item.type, item.url, item.title );
     } );
+*/
 
     var myOptions = {
-         content: contentHTML
+         content: 'contentHTML'
         ,disableAutoPan: false
         ,maxWidth: 0
         ,pixelOffset: new google.maps.Size( -170, -140 )

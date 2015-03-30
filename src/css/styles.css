@@ -28,13 +28,25 @@ html, body {
     border: 2px solid #acacac;
     border-radius: 10px;
     color: white;
-    padding: 20px;
+    padding: 10px;
     width: 350px;
+}
+
+input {
+    width: 100%;
+    color: #000;
 }
 
 /* Infobox Close button styling */
 .infoBoxClose {
     display: none;
+}
+
+.infobox-hide {
+    position: fixed;
+    z-index: 99;
+    top: 100px;
+    left: 100px;
 }
 
 /* Marker Types styling */

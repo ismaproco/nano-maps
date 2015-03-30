@@ -1,17 +1,23 @@
 // the main ViewModel
-var ViewModel = function( makers, map ) {
-    makers = makers || [];
-    
+var ViewModel = function( markers, markerTypes, map ) {
+    var markers = markers || [];
+    var markerTypes = markerTypes || [];
+
+    // build the markerType observable Array
+    this.markerTypes = ko.observableArray( markerTypes );
+
     //reference of the google map object
     this.map = map;
 
     // map the makers, and create an observable array with them
-    this.makers = ko.observableArray( makers.map( function ( maker ) {
-       return new Maker();
+    this.markers = ko.observableArray( markers.map( function ( marker ) {
+       return marker;
     } ) );
 
     // initialize the current maker before being saved into the model
-    this.currentMaker = ko.observable();
+    var currentMaker = new Marker( { } );
+
+    this.currentMarker = ko.observable( currentMaker );
 
     // add a new maker to the observable array.
     this.saveMaker = function() {
