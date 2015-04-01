@@ -54,6 +54,33 @@ function addMakers(map)
       title: 'Hello World!'
     });
 
+    var $infobox = $('.infobox-inner');
+    $infobox.removeClass('infobox-hide');
+
+    var myOptions = {
+         content: $infobox[0]
+        ,disableAutoPan: false
+        ,maxWidth: 0
+        ,pixelOffset: new google.maps.Size( -170, -150 )
+        ,zIndex: null
+        ,infoBoxClearance: new google.maps.Size(1, 1)
+        ,isHidden: false
+        ,pane: "floatPane"
+        ,enableEventPropagation: false
+    };
+
+    var ib = new InfoBox(myOptions);
+    var showInfobox = true;
+    
+    google.maps.event.addListener(marker, 'click', function( event ) {
+        if( showInfobox ) {
+            ib.open(map, marker);    
+        }
+        else {
+            ib.close();
+        }
+        showInfobox = !showInfobox;
+    } );
 
 
 /*
@@ -83,21 +110,7 @@ function addMakers(map)
     } );
 */
 
-    var myOptions = {
-         content: 'contentHTML'
-        ,disableAutoPan: false
-        ,maxWidth: 0
-        ,pixelOffset: new google.maps.Size( -170, -140 )
-        ,zIndex: null
-        ,infoBoxClearance: new google.maps.Size(1, 1)
-        ,isHidden: false
-        ,pane: "floatPane"
-        ,enableEventPropagation: false
-    };
-
-    var ib = new InfoBox(myOptions);
-
-    ib.open(map, marker);
+    
 }
 
 
