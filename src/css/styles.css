@@ -35,13 +35,21 @@ html, body {
     width: 330px;
 }
 
-input {
+input[type='text'] {
     width: 100%;
     color: #000;
     height: 30px;
     font-size: 20px;
     border-radius: 5px;
     padding-left: 10px;
+}
+
+.infobox-inner button .cancel{
+    background: rgba(255,0,0,0.7);
+}
+
+.infobox-inner button .cancel{
+    background: rgba(255,0,0,0.7);
 }
 
 /* Infobox Close button styling */
