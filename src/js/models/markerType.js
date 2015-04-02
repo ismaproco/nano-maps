@@ -10,6 +10,9 @@ function MarkerType( markerType ) {
 
 var markerTypes = [
     new MarkerType ( 
+        { type:'none', url:'images/pin_small.png', title: 'None' } 
+    ),
+    new MarkerType ( 
         { type:'restaurant', url:'images/Apple.png', title: 'Restaurant' } 
     ),
     new MarkerType ( 
@@ -20,9 +23,6 @@ var markerTypes = [
     ),
     new MarkerType ( 
         { type:'diving', url:'images/Diving.png', title: 'Diving' } 
-    ),
-    new MarkerType ( 
-        { type:'romance', url:'images/Hearts.png', title: 'Romance' } 
     ),
     new MarkerType ( 
         { type:'movies', url:'images/movierollsmall.png', title: 'Movies' } 
