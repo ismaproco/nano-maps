@@ -55,14 +55,23 @@
 
     <div class="infobox-inner infobox-hide">
         <span class="markers-types-title">Input marker name:</span>
-        <input data-bind="textInput: currentMarker().name"></input>
+        <input type="text" data-bind="textInput: selectedMarker().name"></input>
         <span class="markers-types-title">Choose marker type:</span>
         <div data-bind="foreach: markerTypes">
-            <div class="marker-type" data-bind="attr: { id: type }">
+            <div class="marker-type" data-bind="click: $parent.setTypeSelectedMarker, attr: { id: type }">
                 <img data-bind="attr: { src: url, alt: title }">
                 <span data-bind="text: title"></span>
             </div>
         </div>
+                
+        <button type="button" class="btn btn-default btn-xs" data-bind="click: addMarker">
+          <span class="glyphicon glyphicon-ok" aria-hidden="true">Save</span>
+        </button>
+
+        <button type="button" class="btn btn-default btn-xs" data-bind="click: removeMarker">
+          <span class="glyphicon glyphicon-remove" aria-hidden="true">Remove</span> 
+        </button>
+
     </div>
     
     <!-- javascript libraries -->

@@ -3,7 +3,7 @@ var viewModel;
 // Initialize google map
 function initialize() {
         var mapOptions = {
-          center: { lat: 10.3008886, lng: -85.8380699},
+          center: { lat: 52.2375111, lng: 21.0111977},
           zoom: 15,
 
         };
@@ -37,80 +37,12 @@ function initialize() {
         });
 
 
-        addMakers(map);
+        //addMakers(map);
 }
 
 // attach the initialize to the page load
 google.maps.event.addDomListener(window, 'load', initialize);
 
-// add maker to the map
-function addMakers(map)
-{
-    var pinImage = 'images/pin_small.png'
-    var marker = new google.maps.Marker({
-      position: new google.maps.LatLng(10.3008886,-85.8380699),
-      map: map,
-      icon: pinImage,
-      title: 'Hello World!'
-    });
 
-    var $infobox = $('.infobox-inner');
-    $infobox.removeClass('infobox-hide');
-
-    var myOptions = {
-         content: $infobox[0]
-        ,disableAutoPan: false
-        ,maxWidth: 0
-        ,pixelOffset: new google.maps.Size( -170, -150 )
-        ,zIndex: null
-        ,infoBoxClearance: new google.maps.Size(1, 1)
-        ,isHidden: false
-        ,pane: "floatPane"
-        ,enableEventPropagation: false
-    };
-
-    var ib = new InfoBox(myOptions);
-    var showInfobox = true;
-    
-    google.maps.event.addListener(marker, 'click', function( event ) {
-        if( showInfobox ) {
-            ib.open(map, marker);    
-        }
-        else {
-            ib.close();
-        }
-        showInfobox = !showInfobox;
-    } );
-
-
-/*
-
-    function createMarkerType( type, url, title  )
-    {
-        var markerHTML  = '<div class="marker-type" data-type="'+type+'">';
-        markerHTML += '<img src="'+url+'" alt="'+title+'" >';
-        markerHTML += '<span>'+title+'<span></div>';
-
-        return markerHTML;    
-    }
-
-    var markerTypes = [
-            {type:'restaurant', url:'images/Apple.png', title: 'Restaurant' },
-            {type:'bar', url:'images/Beer.png', title: 'Bar' },
-            {type:'coffe', url:'images/Coffecan.png', title: 'Coffe' },
-            {type:'diving', url:'images/Diving.png', title: 'Diving' },
-            {type:'romance', url:'images/Hearts.png', title: 'Romance' },
-            {type:'movies', url:'images/movierollsmall.png', title: 'Movies' },
-        ];
-
-    var contentHTML = '<span class="markers-types-title">Choose marker type:</span>';
-
-    $.each( markerTypes, function( index, item ) { 
-        contentHTML += createMarkerType( item.type, item.url, item.title );
-    } );
-*/
-
-    
-}
 
 
