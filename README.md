@@ -32,6 +32,14 @@ http://stackoverflow.com/questions/7396722/hide-local-listings-from-google-maps-
 
 - After testing the infobox I realize i was breaking the in some way the MVVM pattern in the way I was interacting with the menu, so I start to create a HTML template for the menu, and manage of operations from the knockoutJS library.
 
+- Using knockout flow control components I was able to link the infobox elements to a selected observable object, in this way the changes inside elements are viewed in the model.
+
+- Added the possibility of having multiple markers in one map with different types and icons.
+
+- Is needed a better way to implement the marker management is better that every click add a new marker, or that the position change with every click, I need to evaluate the most UX way to do it.
+
+
+
 
 Resources
 ---------
