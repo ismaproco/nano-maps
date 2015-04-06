@@ -38,7 +38,7 @@ http://stackoverflow.com/questions/7396722/hide-local-listings-from-google-maps-
 
 - Is needed a better way to implement the marker management is better that every click add a new marker, or that the position change with every click, I need to evaluate the most UX way to do it.
 
-- The images didn't look clear in the map so i added a shadow to them.
+- The images didn't look clear in the map so I added a shadow to them.
 
 
 Resources
