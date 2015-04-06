@@ -36,9 +36,10 @@ http://stackoverflow.com/questions/7396722/hide-local-listings-from-google-maps-
 
 - Added the possibility of having multiple markers in one map with different types and icons.
 
-- Is needed a better way to implement the marker management is better that every click add a new marker, or that the position change with every click, I need to evaluate the most UX way to do it.
+- Is needed a better way to implement the marker management is better that every click add a new marker, or that the position change with every click, I need to evaluate a better UX.
 
 - The images didn't look clear in the map so i added a shadow to them.
+
 
 
 Resources
