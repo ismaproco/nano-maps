@@ -21,9 +21,16 @@ var ViewModel = function( markers, markerTypes, map ) {
 
     // add a new marker to the observable array.
     this.addMarker = function() {
+        // set the parent of the current google marker's parent with the app marker.
         this.currentMarker().googleMarker().parent = this.currentMarker( );
+        // hides the infobox.
+        this.currentMarker().googleMarker().$infobox.addClass( 'infobox-hide' );
+        // push the current marker to the applications markers.
         this.markers.push( this.currentMarker().googleMarker().parent );
-        this.currentMarker(new Marker( {} ) )
+        // reset the current marker.
+        this.currentMarker( new Marker( {} ) );
+
+
     };
 
     // rsteps to remove a marker

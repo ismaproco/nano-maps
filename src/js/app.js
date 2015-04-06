@@ -36,8 +36,6 @@ function initialize() {
             viewModel.mapClick(map, event);
         });
 
-
-        //addMakers(map);
 }
 
 // attach the initialize to the page load
