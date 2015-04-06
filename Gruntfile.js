@@ -51,17 +51,21 @@ module.exports = function (grunt) {
             },
             my_target: {
                 files: {
-                    'build/js/app.js': ['src/js/app.js'],
-                    'build/js/maker.js': ['src/js/maker.js'],
-                    'build/js/viewmodel.js': ['src/js/viewmodel.js'],
-                    'build/js/models/marker.js': ['src/js/models/marker.js'],
-                    'build/js/infobox.js': ['src/js/infobox.js'],
                     // distribution libraries
                     'build/bower_components/jquery/jquery.js': ['src/bower_components/jquery/jquery.js'],
                     'build/bower_components/bootstrap/dist/js/bootstrap.js': ['src/bower_components/bootstrap/dist/js/bootstrap.js'],
                     'build/bower_components/knockout/dist/knockout.js': ['src/bower_components/knockout/dist/knockout.js'],
                     'build/bower_components/underscore/underscore.js': ['src/bower_components/underscore/underscore.js']
                 }
+            },
+            sources: {
+                files: [{
+                    expand: true,
+                    cwd: 'src/js/',
+                    src: ['**/*.js'],
+                    dest: 'build/js/',
+                    ext: '.js'
+                }]
             }
         },
         imagemin: {                          // Task
