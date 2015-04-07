@@ -40,6 +40,8 @@ http://stackoverflow.com/questions/7396722/hide-local-listings-from-google-maps-
 
 - The images didn't look clear in the map so I added a shadow to them.
 
+- Using the Knockout observable array of location, I implemented a UL list of binded items, using the knockout data-bind expression in the html was very helpful, because no custom hiding/showing logic was needed in the ViewModel, so the elements in the list were in sync with the map markers. 
+
 
 
 Resources
