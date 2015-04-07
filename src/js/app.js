@@ -27,7 +27,7 @@ function initialize() {
         map.setOptions({disableDoubleClickZoom: true });
 
         // create the ViewModel with the created makers and current map
-        viewModel = new ViewModel( markers, markerTypes , map);
+        viewModel = new ViewModel( locations, markerTypes , map);
         // bind a new instance of the viewModel to the page
         ko.applyBindings(viewModel);        
 

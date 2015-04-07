@@ -1,5 +1,5 @@
 // Marker model to show in the map
-function Marker( marker )
+function Location( marker )
 {
     // set the marker values with observable values
     this.name = ko.observable ( marker.name || '' );
@@ -13,6 +13,6 @@ function Marker( marker )
 
 // Starting Markers 
 
-var markers = [
+var locations = [
     
 ]

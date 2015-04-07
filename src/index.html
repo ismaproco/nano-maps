@@ -42,38 +42,40 @@
     <!-- layout -->
     <div class="container-fluid">
         <div class="row">
-            <div class=".col-xs-12 .col-md-6">
+            <div class="col-md-8 full-height">
                 <!-- map container -->
                 <div class="map-container" id="map"></div>            
             </div>
-            <div class=".col-xs-12 .col-md-4">
+            <div class="col-md-4 no-gutter">
                 <!-- list container -->
-                <div id="list"></div>
+                <div class="locations-list">
+                    Look at this!!!
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- infobox html for the markers -->
     <div class="infobox-inner infobox-hide">
         <span class="markers-types-title">Input marker name:</span>
-        <input type="text" data-bind="textInput: selectedMarker().name"></input>
+        <input type="text" data-bind="textInput: selectedLocation().name"></input>
         <span class="markers-types-title">Choose marker type:</span>
         <div data-bind="foreach: markerTypes">
-            <div class="marker-type" data-bind="click: $parent.setTypeSelectedMarker, attr: { id: type }">
+            <div class="marker-type" data-bind="click: $parent.setTypeSelectedLocation, attr: { id: type }">
                 <img data-bind="attr: { src: url, alt: title }">
                 <span data-bind="text: title"></span>
             </div>
         </div>
-                
-        <button type="button" class="btn btn-default btn-xs" data-bind="visible: !selectedMarker().googleMarker().parent, click: addMarker">
-          <span class="glyphicon glyphicon-ok" aria-hidden="true">Save</span>
+        <!-- hide the save button if the current location is already saved -->
+        <button type="button" class="btn btn-default btn-xs" data-bind="visible: !selectedLocation().googleMarker().parent, click: addMarker">
+          <span class="glyphicon glyphicon-ok" aria-hidden="true">&nbsp;Save</span>
         </button>
 
         <button type="button" class="btn btn-default btn-xs" data-bind="click: removeMarker">
-          <span class="glyphicon glyphicon-remove" aria-hidden="true">Remove</span> 
+          <span class="glyphicon glyphicon-remove" aria-hidden="true">&nbsp;Remove</span> 
         </button>
-
     </div>
-    
+
     <!-- javascript libraries -->
     <script type="text/javascript" src="bower_components/jquery/jquery.js"></script>
     <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
