@@ -11,8 +11,8 @@ var ViewModel = function( locations, markerTypes, map ) {
     this.map = map;
 
     // map the makers, and create an observable array with them
-    this.locations = ko.observableArray( locations.map( function ( marker ) {
-       return marker;
+    this.locations = ko.observableArray( locations.map( function ( location ) {
+       return location;
     } ) );
 
     // initialize the current and selected markers with empty objects
@@ -34,11 +34,11 @@ var ViewModel = function( locations, markerTypes, map ) {
     // rsteps to remove a marker
     this.removeMarker = function() {
         // hide the infobox
-        this.currentLocation().googleMarker().$infobox.addClass('infobox-hide');
+        this.selectedLocation().googleMarker().$infobox.addClass('infobox-hide');
         //remove the marker from the map
-        this.currentLocation().googleMarker().setMap(null);
+        this.selectedLocation().googleMarker().setMap(null);
         // remove the marker from the observable array
-        this.locations.remove(this.currentLocation);
+        this.locations.remove(this.selectedLocation());
     };
 
 
@@ -54,6 +54,7 @@ var ViewModel = function( locations, markerTypes, map ) {
 
     // set the type of the selected marker
     this.setTypeSelectedLocation = function( markerType ) {
+        self.selectedLocation().type( markerType );
         self.selectedLocation().googleMarker().setIcon( markerType.url() );
     };
 

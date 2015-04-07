@@ -20,6 +20,7 @@ html, body {
 
 .locations-list {
     padding-top: 51px;
+    list-style: none;
 }
 
 .full-height {
