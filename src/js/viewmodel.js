@@ -5,7 +5,9 @@ var ViewModel = function( locations, markerTypes, map ) {
     var markerTypes = markerTypes || [];
 
     // build the markerType observable Array
-    this.markerTypes = ko.observableArray( markerTypes );
+    this.markerTypes = ko.observableArray( Object.keys(markerTypes).map(function(key){
+        return markerTypes[key];
+    }));
 
     //reference of the google map object
     this.map = map;
@@ -40,7 +42,6 @@ var ViewModel = function( locations, markerTypes, map ) {
         // remove the marker from the observable array
         this.locations.remove(this.selectedLocation());
     };
-
 
     // manage the map clicks
     this.mapClick = function( map, event ) {
@@ -81,9 +82,7 @@ var ViewModel = function( locations, markerTypes, map ) {
 
         // initialize the marker type as none
         this.currentLocation().type(
-            markerTypes.filter( function( markerType ) { 
-                    return markerType.type() == 'none';
-            })[0]
+            markerTypes.none
         );
 
         // Create the google marker

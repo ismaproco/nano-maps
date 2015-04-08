@@ -8,23 +8,23 @@ function MarkerType( markerType ) {
 
 // Starting Marker Types 
 
-var markerTypes = [
-    new MarkerType ( 
+var markerTypes = {
+    none: new MarkerType ( 
         { type:'none', url:'images/pin_small.png', title: 'None' } 
     ),
-    new MarkerType ( 
+    restaurant: new MarkerType ( 
         { type:'restaurant', url:'images/Apple.png', title: 'Restaurant' } 
     ),
-    new MarkerType ( 
+    bar: new MarkerType ( 
         { type:'bar', url:'images/Beer.png', title: 'Bar' } 
     ),
-    new MarkerType ( 
+    coffe: new MarkerType ( 
         { type:'coffe', url:'images/Coffecan.png', title: 'Coffe' } 
     ),
-    new MarkerType ( 
+    diving: new MarkerType ( 
         { type:'diving', url:'images/Diving.png', title: 'Diving' } 
     ),
-    new MarkerType ( 
+    movies: new MarkerType ( 
         { type:'movies', url:'images/movierollsmall.png', title: 'Movies' } 
     ),
-];
+};
