@@ -19,23 +19,23 @@ var ViewModel = function( locations, markerTypes, map ) {
     // add a new marker to the observable array.
     this.addMarker = function() {
         // hides the infobox.
-        this.currentLocation().googleMarker().$infobox.addClass( 'infobox-hide' );
+        self.currentLocation().googleMarker().$infobox.addClass( 'infobox-hide' );
         // set the parent of the current google marker's parent with the app marker.
-        this.currentLocation().googleMarker().parent = this.currentLocation( );
+        self.currentLocation().googleMarker().parent = self.currentLocation( );
         // push the current marker to the applications markers.
-        this.locations.push( this.currentLocation().googleMarker().parent );
+        self.locations.push( self.currentLocation().googleMarker().parent );
         // reset the current marker.
-        this.currentLocation( new Location( {} ) );
+        self.currentLocation( new Location( {} ) );
     };
 
     // rsteps to remove a marker
     this.removeMarker = function() {
         // hide the infobox
-        this.selectedLocation().googleMarker().$infobox.addClass('infobox-hide');
+        self.selectedLocation().googleMarker().$infobox.addClass('infobox-hide');
         //remove the marker from the map
-        this.selectedLocation().googleMarker().setMap(null);
+        self.selectedLocation().googleMarker().setMap(null);
         // remove the marker from the observable array
-        this.locations.remove(this.selectedLocation());
+        self.locations.remove(self.selectedLocation());
     };
 
     // manage the map clicks
@@ -43,7 +43,7 @@ var ViewModel = function( locations, markerTypes, map ) {
         var lat = event.latLng.lat();
         var lng = event.latLng.lng();
         // add a google marker to the map
-        this.addMarkerToView(map, this.currentLocation(), lat, lng);
+        self.addMarkerToView(map, self.currentLocation(), lat, lng);
         // writes the clicked position in the console
         console.log( "Lat=" + lat + "; Lng=" + lng );
     };
@@ -66,7 +66,7 @@ var ViewModel = function( locations, markerTypes, map ) {
         if( !$.isEmptyObject( location.googleMarker() ) )
         {
             // remove the existing marker
-            this.currentLocation().googleMarker().setMap(null);
+            self.currentLocation().googleMarker().setMap(null);
         }
 
         // set the small pin as the marker image
