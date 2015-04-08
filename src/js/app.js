@@ -4,7 +4,7 @@ var viewModel;
 function initialize() {
         var mapOptions = {
           center: { lat: 52.2375111, lng: 21.0111977},
-          zoom: 15,
+          zoom: 14,
 
         };
         var map = new google.maps.Map(document.getElementById('map'),
