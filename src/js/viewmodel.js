@@ -9,12 +9,16 @@ var ViewModel = function( locations, markerTypes, map ) {
         return markerTypes[key];
     }));
 
-    //reference of the google map object
+    // reference of the google map object
     this.map = map;
 
     // initialize the current and selected markers with empty objects
     this.currentLocation = ko.observable( new Location( { } ) );
     this.selectedLocation = ko.observable( new Location( { } ) );
+    // observable to store the filter value of the filtered textbox
+    this.filter = ko.observable('');
+
+
 
     // add a new marker to the observable array.
     this.addMarker = function() {
@@ -119,21 +123,47 @@ var ViewModel = function( locations, markerTypes, map ) {
         } );
     }
 
-    // map the makers, and create an observable array with them
-    this.locations = ko.observableArray( locations.map( function ( location ) {
-        self.addMarkerToView(self.map, location, location.lat(), location.lng() );
-        location.googleMarker().parent = location;
-        return location;
-    } ) );
-
-    // computed element to manage the Locations filtering
-    this.LocationsFiltered = ko.computed(function() {
-        return this.locations().filter(function(location) {
+    // map the markers, and create an observable array with them
+    this.locations = ko.observableArray( 
+        locations.map( function ( location ) {
+            self.addMarkerToView( 
+                        self.map, location,location.lat(), location.lng() );
+            // set the googleMarker parent as the respective location.
+            location.googleMarker().parent = location;
             return location;
-        });
-    }, this);
+        } )
+    );
 
+    // manage the keypress of the of the filter input
+    this.filterKeyPress = function( model, event) {
+        self.filter(self.filter() +  String.fromCharCode( event.keyCode ) );
+        // send the filter value to the filtering function
+        self.filterLocations( self.filter() );
+    };
 
+    this.filterKeyEvent = function( model, event ) {
+        self.filterLocations( self.filter() );
+    };
 
+    // toggle visibility of locations by the filter text
+    this.filterLocations = function( text ) {
+        // text is initialize with empty array if input argument is empty
+        text = text || '';
+        // transform the text to lower case to be compared
+        text = text.toLowerCase();
 
+        // toggle the visibility of the location comparing the location's name
+        // with the input text
+        self.locations().forEach( function( location ) {
+            if( location.name().toLowerCase().indexOf( text ) > -1 )
+            {
+                location.isVisible( true );
+                location.googleMarker().setMap( self.map );
+            } 
+            else {
+                location.isVisible( false );
+                location.googleMarker().setMap( null );
+            }
+        } );
+    };
 }

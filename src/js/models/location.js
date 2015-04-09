@@ -10,6 +10,7 @@ function Location( marker )
     // set the default markerType as none
     this.type = ko.observable ( marker.type || markerTypes.none );
     this.googleMarker = ko.observable ( marker.googleMarker || {} );
+    this.isVisible = ko.observable(true);
 }
 
 // Starting Markers 
@@ -105,7 +106,7 @@ var locations = [
         lng: 20.99040057067871,
         type: markerTypes.bar
     }),
-    
+
     new Location({
         name:'Animas Coffe',
         lat: 52.2468460511696,

@@ -48,7 +48,8 @@
             </div>
             <div class="col-md-4 no-gutter overflow full-height">
                 <div class="filter-section" >
-                    <input type="text"></input>
+                    <input type="text" 
+                            data-bind="textInput: filter, event: { 'keypress': filterKeyPress, 'keyup': filterKeyEvent }"></input>
                     <span class="glyphicon glyphicon-search input-search" aria-hidden="true"></span>
                     <div data-bind="foreach: markerTypes">
                         <div class="marker-type" data-bind="">
@@ -58,8 +59,8 @@
                     </div>
                 </div>
                 <!-- list container -->
-                <ul class="locations-list" data-bind="foreach: LocationsFiltered">
-                    <li>
+                <ul class="locations-list" data-bind="foreach: locations">
+                    <li data-bind="visible: isVisible">
                         <img data-bind="attr: { src: type().url() , alt: type }">
                         <span data-bind="text: name"></span>
                     </li>
