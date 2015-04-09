@@ -44,7 +44,9 @@ http://stackoverflow.com/questions/7396722/hide-local-listings-from-google-maps-
 
 - I use the locations list model to prepoluate the map with custom markers, the list of markers.
 
-- I was designing the marker filtered list and I decide to use the same HTML to show the marker types that are part of the infobox, but they have another click event in them, so the selected marker type will filter only by type.  
+- I was designing the marker filtered list and I decide to use the same HTML to show the marker types that are part of the infobox, but they have another click event in them, so the selected marker type will filter only by type.
+
+- Using the knockout observable properties I was able to show and hide markers and list items adding a isVisible property in the location model, and creating some custom logic to filter the items with the text input.
 
 Resources
 ---------
@@ -77,6 +79,6 @@ http://knockoutjs.com/documentation/introduction.html
 
 https://code.google.com/p/google-maps-utility-library-v3/
 
-- blog post explaining the use of computed observer to filter observedArrays
+- Blog post explaining the use of computed observer to filter observedArrays
 
 http://blog.stevensanderson.com/2013/12/03/knockout-projections-a-plugin-for-efficient-observable-array-transformations/
