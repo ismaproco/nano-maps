@@ -126,4 +126,14 @@ var ViewModel = function( locations, markerTypes, map ) {
         return location;
     } ) );
 
+    // computed element to manage the Locations filtering
+    this.LocationsFiltered = ko.computed(function() {
+        return this.locations().filter(function(location) {
+            return location;
+        });
+    }, this);
+
+
+
+
 }

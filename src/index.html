@@ -47,8 +47,18 @@
                 <div class="map-container" id="map"></div>            
             </div>
             <div class="col-md-4 no-gutter overflow full-height">
+                <div class="filter-section" >
+                    <input type="text"></input>
+                    <span class="glyphicon glyphicon-search input-search" aria-hidden="true"></span>
+                    <div data-bind="foreach: markerTypes">
+                        <div class="marker-type" data-bind="">
+                            <img data-bind="attr: { src: url, alt: title }">
+                            <span data-bind="text: title"></span>
+                        </div>
+                    </div>
+                </div>
                 <!-- list container -->
-                <ul class="locations-list" data-bind="foreach: locations">
+                <ul class="locations-list" data-bind="foreach: LocationsFiltered">
                     <li>
                         <img data-bind="attr: { src: type().url() , alt: type }">
                         <span data-bind="text: name"></span>
