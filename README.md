@@ -42,6 +42,9 @@ http://stackoverflow.com/questions/7396722/hide-local-listings-from-google-maps-
 
 - Using the Knockout observable array of location, I implemented a UL list of binded items, using the knockout data-bind expression in the html was very helpful, because no custom hiding/showing logic was needed in the ViewModel, so the elements in the list were in sync with the map markers.
 
+- I use the locations list model to prepoluate the map with custom markers, the list of markers.
+
+- I was designing the marker filtered list and I decide to use the same HTML to show the marker types that are part of the infobox, but they have another click event in them, so the selected marker type will filter only by type.  
 
 Resources
 ---------
@@ -73,3 +76,7 @@ http://knockoutjs.com/documentation/introduction.html
 - Infobox library that overrides the default infobox control of the maps api.
 
 https://code.google.com/p/google-maps-utility-library-v3/
+
+- blog post explaining the use of computed observer to filter observedArrays
+
+http://blog.stevensanderson.com/2013/12/03/knockout-projections-a-plugin-for-efficient-observable-array-transformations/
