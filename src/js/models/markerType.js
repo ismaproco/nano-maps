@@ -25,6 +25,6 @@ var markerTypes = {
         { type:'diving', url:'images/Diving.png', title: 'Diving' } 
     ),
     movies: new MarkerType ( 
-        { type:'movies', url:'images/movierollsmall.png', title: 'Movies' } 
+        { type:'movies', url:'images/Movierollsmall.png', title: 'Movies' } 
     ),
 };
