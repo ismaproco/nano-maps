@@ -44,7 +44,35 @@ html, body {
     width: 30px;
 }
 
-/* Infobox styling */
+/* filter section styles */
+.filter-section {
+    padding: 10px;
+}
+
+.filter-section div {
+    margin-top: 4px;
+}
+
+.filter-section input[type='text'] {
+    width: 100%;
+    color: #000;
+    height: 30px;
+    font-size: 20px;
+    border-radius: 5px;
+    padding: 0 30px 0 0; 
+}
+
+.filter-section .input-search {
+    float: right;
+    top: -22px;
+    right: 10px;
+}
+
+.filter-section .marker-type {
+    width: 45px;
+}
+
+/* Infobox styles */
 .infoBox {
     background: rgba(0,0,0,0);
 }
@@ -59,7 +87,7 @@ html, body {
     width: 330px;
 }
 
-input[type='text'] {
+.infoBox input[type='text'] {
     width: 100%;
     color: #000;
     height: 30px;
@@ -76,7 +104,7 @@ input[type='text'] {
     background: rgba(255,0,0,0.7);
 }
 
-/* Infobox Close button styling */
+/* Infobox Close button styles */
 .infoBoxClose {
     display: none;
 }
@@ -89,7 +117,7 @@ input[type='text'] {
     display: none;
 }
 
-/* Marker Types styling */
+/* Marker Types styles */
 .marker-type {
     display: inline-block;
     cursor: pointer;
