@@ -19,8 +19,8 @@ var markerTypes = {
     bar: new MarkerType ( 
         { type:'bar', url:'images/Beer.png', title: 'Bar' } 
     ),
-    coffe: new MarkerType ( 
-        { type:'coffe', url:'images/Coffecan.png', title: 'Coffe' } 
+    coffee: new MarkerType ( 
+        { type:'coffe', url:'images/Coffecan.png', title: 'Coffee' } 
     ),
     diving: new MarkerType ( 
         { type:'diving', url:'images/Diving.png', title: 'Diving' } 

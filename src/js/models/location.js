@@ -32,7 +32,7 @@ var locations = [
         name:'Starbucks',
         lat: 52.225474460511696,
         lng: 20.998434295654297,
-        type: markerTypes.coffe
+        type: markerTypes.coffee
     }),
     new Location({
         name:'iMax Movie',
@@ -47,10 +47,10 @@ var locations = [
         type: markerTypes.restaurant
     }),
     new Location({
-        name:'Dreams Coffe',
+        name:'Dreams Coffee',
         lat: 52.2498460511696,
         lng: 20.99410057067871,
-        type: markerTypes.coffe
+        type: markerTypes.coffee
     }),
     new Location({
         name:'Vortex Bar',
@@ -74,7 +74,7 @@ var locations = [
         name:'Mia\'s Cafe',
         lat: 52.225474460511696,
         lng: 20.978434295654297,
-        type: markerTypes.coffe
+        type: markerTypes.coffee
     }),
     new Location({
         name:'Ticket Master',
@@ -89,10 +89,10 @@ var locations = [
         type: markerTypes.restaurant
     }),
     new Location({
-        name:'Deep Coffe',
+        name:'Deep Coffee',
         lat: 52.2468460511696,
         lng: 20.99310057067871,
-        type: markerTypes.coffe
+        type: markerTypes.coffee
     }),
     new Location({
         name:'Austin\'s Bar',
@@ -108,10 +108,10 @@ var locations = [
     }),
 
     new Location({
-        name:'Animas Coffe',
+        name:'Animas Coffee',
         lat: 52.2468460511696,
         lng: 21.02310057067871,
-        type: markerTypes.coffe
+        type: markerTypes.coffee
     }),
     new Location({
         name:'Garbage Place',
