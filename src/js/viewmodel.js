@@ -232,7 +232,7 @@ var ViewModel = function( locations, markerTypes, map ) {
     }));
 
 
-    // map the markers, and create an observable array with them
+    // add the default locations to the map
     this.locations = ko.observableArray( 
         locations.map( function ( location ) {
             self.addMarkerToView( 
@@ -242,4 +242,52 @@ var ViewModel = function( locations, markerTypes, map ) {
             return location;
         } )
     );
+
+    //** Google places API methods
+    //
+
+    this.getListOfPlacesGoogle = function( markerType, googleType ) {
+
+        function callback(results, status) {
+          if (status == google.maps.places.PlacesServiceStatus.OK) {
+            for (var i = 0; i < results.length; i++) {
+              var place = results[i];
+
+                var location = new Location({
+                    name: results[i].name ,
+                    lat: results[i].geometry.location.k,
+                    lng: results[i].geometry.location.D,
+                    type: markerType
+                });
+
+
+                self.addMarkerToView( 
+                        self.map, location,location.lat(), location.lng() );
+                // set the googleMarker parent as the respective location.
+                location.googleMarker().parent = location;
+                self.locations.push( location );
+
+            }
+          }
+        }
+
+        var locationCoordinates = new google.maps.LatLng( 52.2375111 , 21.0111977 );
+
+          var request = {
+            location: locationCoordinates,
+            radius: '3000',
+            types: [ googleType ]
+          };
+
+          service = new google.maps.places.PlacesService(map);
+          service.nearbySearch(request, callback);
+    }
+
+    // get google places from the API.
+    this.getListOfPlacesGoogle( markerTypes.restaurant, 'restaurant' );
+    this.getListOfPlacesGoogle( markerTypes.bar, 'bar' );
+    this.getListOfPlacesGoogle( markerTypes.coffee, 'cafe' );
+    this.getListOfPlacesGoogle( markerTypes.movies, 'movie_theater' );
+    this.getListOfPlacesGoogle( markerTypes.diving, 'aquarium' );
+
 }
