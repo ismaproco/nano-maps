@@ -52,7 +52,7 @@
                             data-bind="textInput: filter, event: { 'keypress': filterKeyPress, 'keyup': filterKeyEvent }"></input>
                     <span class="glyphicon glyphicon-search input-search" aria-hidden="true"></span>
                     <div data-bind="foreach: markerTypes">
-                        <div class="marker-type" data-bind="">
+                        <div class="marker-type" data-bind="click: $parent.filterLocationsByType">
                             <img data-bind="attr: { src: url, alt: title }">
                             <span data-bind="text: title"></span>
                         </div>
@@ -60,7 +60,7 @@
                 </div>
                 <!-- list container -->
                 <ul class="locations-list" data-bind="foreach: locations">
-                    <li data-bind="visible: isVisible">
+                    <li data-bind="visible: isVisible, click: $parent.selectLocation">
                         <img data-bind="attr: { src: type().url() , alt: type }">
                         <span data-bind="text: name"></span>
                     </li>

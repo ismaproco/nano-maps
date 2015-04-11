@@ -37,7 +37,13 @@ html, body {
 }
 
 .locations-list li {
-    border-bottom: 1px solid #cfcfcf; 
+    border-bottom: 1px solid #cfcfcf;
+    cursor: pointer;
+}
+
+.locations-list li:hover {
+    background: #cacaca;
+    border-radius: 2px;
 }
 
 .locations-list img {

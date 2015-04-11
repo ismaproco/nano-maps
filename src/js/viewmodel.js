@@ -5,40 +5,37 @@ var ViewModel = function( locations, markerTypes, map ) {
     var markerTypes = markerTypes || [];
     var bouncingMarker = {};
 
-    // build the markerType observable Array
-    this.markerTypes = ko.observableArray( Object.keys(markerTypes).map(function(key){
-        return markerTypes[key];
-    }));
-
     // reference of the google map object
     this.map = map;
 
     // initialize the current and selected markers with empty objects
-    this.currentLocation = ko.observable( new Location( { } ) );
+    this.temporaryLocation = ko.observable( new Location( { } ) );
     this.selectedLocation = ko.observable( new Location( { } ) );
     // observable to store the filter value of the filtered textbox
     this.filter = ko.observable('');
 
 
+    //** Marker Operations
+    //
 
     // add a new marker to the observable array.
     this.addMarker = function() {
 
         // name is empty?
-        if( self.currentLocation().name().trim().length == 0 )
+        if( self.temporaryLocation().name().trim().length == 0 )
         {
             // set the value as 'no name'
-            self.currentLocation().name('no name');
+            self.temporaryLocation().name('no name');
         }
 
         // hides the infobox.
-        self.currentLocation().googleMarker().$infobox.addClass( 'infobox-hide' );
+        self.temporaryLocation().googleMarker().$infobox.addClass( 'infobox-hide' );
         // set the parent of the current google marker's parent with the app marker.
-        self.currentLocation().googleMarker().parent = self.currentLocation( );
+        self.temporaryLocation().googleMarker().parent = self.temporaryLocation( );
         // push the current marker to the applications markers.
-        self.locations.push( self.currentLocation().googleMarker().parent );
+        self.locations.push( self.temporaryLocation().googleMarker().parent );
         // reset the current marker.
-        self.currentLocation( new Location( {} ) );
+        self.temporaryLocation( new Location( {} ) );
     };
 
     // steps to remove a marker
@@ -56,26 +53,14 @@ var ViewModel = function( locations, markerTypes, map ) {
         self.selectedLocation().googleMarker().$infobox.addClass('infobox-hide');
     }
 
-
     // manage the map clicks
     this.mapClick = function( map, event ) {
         var lat = event.latLng.lat();
         var lng = event.latLng.lng();
         // add a google marker to the map
-        self.addMarkerToView(map, self.currentLocation(), lat, lng);
+        self.addMarkerToView(map, self.temporaryLocation(), lat, lng);
         // writes the clicked position in the console
         console.log( "Lat=" + lat + "; Lng=" + lng );
-    };
-
-    // set the type of the selected marker
-    this.setTypeSelectedLocation = function( markerType ) {
-        self.selectedLocation().type( markerType );
-        self.selectedLocation().googleMarker().setIcon( markerType.url() );
-    };
-
-    // print information into the console log
-    this.writeLog = function(text) {
-        console.log(text);
     };
 
     // add maker to the map
@@ -85,7 +70,7 @@ var ViewModel = function( locations, markerTypes, map ) {
         if( !$.isEmptyObject( location.googleMarker() ) )
         {
             // remove the existing marker
-            self.currentLocation().googleMarker().setMap(null);
+            self.temporaryLocation().googleMarker().setMap(null);
         }
 
         // set the small pin as the marker image
@@ -103,7 +88,7 @@ var ViewModel = function( locations, markerTypes, map ) {
           animation: google.maps.Animation.DROP,
         });
 
-        // set the google marker of the currentLocation.
+        // set the google marker of the temporaryLocation.
         location.googleMarker(marker);
 
         // select the infobox and hide old
@@ -125,45 +110,55 @@ var ViewModel = function( locations, markerTypes, map ) {
         };
 
         // build the infobox with the options
-        var ib = new InfoBox(myOptions);
+        marker.ib = new InfoBox(myOptions);
         
         // creates the event listener for the marker click. 
         google.maps.event.addListener(marker, 'click', function( event ) {
-            // removes the hide class from the infobox
-            marker.$infobox.removeClass('infobox-hide');
-            // set the selected marker to show specific data in the infobox
-            // if the marker.parent exists is a saved marker.
-            // if not is a temporary marker
-            self.selectedLocation( marker.parent || self.currentLocation() );
-            ib.open(map, marker);
-            // add bounce animation to the marker
-            if (marker.getAnimation() != null && marker != bouncingMarker ) {
-                marker.setAnimation(null);
-            }
-            else {
-                // Bouncing marker animation exists?  
-                if( bouncingMarker.setAnimation ) {
-                    bouncingMarker.setAnimation(null);    
-                }
-                //Animate the clicked marker    
-                marker.setAnimation(google.maps.Animation.BOUNCE);
-                bouncingMarker = marker;
-            }
+            self.selectMarker( marker );
         } );
     }
 
-    // map the markers, and create an observable array with them
-    this.locations = ko.observableArray( 
-        locations.map( function ( location ) {
-            self.addMarkerToView( 
-                        self.map, location,location.lat(), location.lng() );
-            // set the googleMarker parent as the respective location.
-            location.googleMarker().parent = location;
-            return location;
-        } )
-    );
+    // select the marker in the map
+    this.selectMarker = function( marker ) {
+        // removes the hide class from the infobox
+        marker.$infobox.removeClass('infobox-hide');
+        // set the selected marker to show specific data in the infobox
+        // if the marker.parent exists is a saved marker.
+        // if not is a temporary marker
+        self.selectedLocation( marker.parent || self.temporaryLocation() );
+        marker.ib.open(map, marker);
+        // add bounce animation to the marker
+        if (marker.getAnimation() != null && marker != bouncingMarker ) {
+            marker.setAnimation(null);
+        }
+        else {
+            // Bouncing marker animation exists?  
+            if( bouncingMarker.setAnimation ) {
+                bouncingMarker.setAnimation(null);    
+            }
+            //Animate the clicked marker    
+            marker.setAnimation(google.maps.Animation.BOUNCE);
+            bouncingMarker = marker;
+        }   
+    }
 
-    // ** Infobox methods
+
+    // ** Locations methods
+    //
+
+    // set the type of the selected marker
+    this.setTypeSelectedLocation = function( markerType ) {
+        self.selectedLocation().type( markerType );
+        self.selectedLocation().googleMarker().setIcon( markerType.url() );
+    };
+
+    // select the location    
+    this.selectLocation = function( location ) {
+        self.selectMarker( location.googleMarker() );
+    }
+
+
+    // ** Filter methods
     //
 
     // manage the keypress of the of the filter input
@@ -183,9 +178,11 @@ var ViewModel = function( locations, markerTypes, map ) {
         text = text || '';
         // transform the text to lower case to be compared
         text = text.toLowerCase();
-
+    
         // hide infobox from the selected marker
-        self.selectedLocation().googleMarker().$infobox.addClass('infobox-hide'); 
+        if( self.selectedLocation().googleMarker().$infobox ) {
+            self.selectedLocation().googleMarker().$infobox.addClass('infobox-hide'); 
+        }
 
         // toggle the visibility of the location comparing the location's name
         // with the input text
@@ -202,4 +199,47 @@ var ViewModel = function( locations, markerTypes, map ) {
             }
         } );
     };
+
+    //toggle visibility of locations by the type
+    this.filterLocationsByType = function( type ) { 
+        // hide infobox from the selected marker
+        if( self.selectedLocation().googleMarker().$infobox ) {
+            self.selectedLocation().googleMarker().$infobox.addClass('infobox-hide'); 
+        }
+        // toggle the visibility of the location comparing the location's name
+        // with the input text
+        self.locations().forEach( function( location ) {
+            if( type.title() == markerTypes.none.title() || 
+                                        location.type().title() == type.title() ) {
+                location.isVisible( true );
+                location.googleMarker().setMap( self.map );
+            } 
+            else {
+                location.isVisible( false );
+                // removes marker from the map
+                location.googleMarker().setMap( null );
+                           
+            }
+        } );
+    };
+
+    //** Model initialization
+    //
+
+    // build the markerType observable Array
+    this.markerTypes = ko.observableArray( Object.keys(markerTypes).map(function(key){
+        return markerTypes[key];
+    }));
+
+
+    // map the markers, and create an observable array with them
+    this.locations = ko.observableArray( 
+        locations.map( function ( location ) {
+            self.addMarkerToView( 
+                        self.map, location,location.lat(), location.lng() );
+            // set the googleMarker parent as the respective location.
+            location.googleMarker().parent = location;
+            return location;
+        } )
+    );
 }
