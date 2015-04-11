@@ -23,6 +23,14 @@ var ViewModel = function( locations, markerTypes, map ) {
 
     // add a new marker to the observable array.
     this.addMarker = function() {
+
+        // name is empty?
+        if( self.currentLocation().name().trim().length == 0 )
+        {
+            // set the value as 'no name'
+            self.currentLocation().name('no name');
+        }
+
         // hides the infobox.
         self.currentLocation().googleMarker().$infobox.addClass( 'infobox-hide' );
         // set the parent of the current google marker's parent with the app marker.
@@ -33,7 +41,7 @@ var ViewModel = function( locations, markerTypes, map ) {
         self.currentLocation( new Location( {} ) );
     };
 
-    // rsteps to remove a marker
+    // steps to remove a marker
     this.removeMarker = function() {
         // hide the infobox
         self.selectedLocation().googleMarker().$infobox.addClass('infobox-hide');
@@ -42,6 +50,12 @@ var ViewModel = function( locations, markerTypes, map ) {
         // remove the marker from the observable array
         self.locations.remove(self.selectedLocation());
     };
+
+    // hide infobox of the selected location
+    this.hideInfobox = function() {
+        self.selectedLocation().googleMarker().$infobox.addClass('infobox-hide');
+    }
+
 
     // manage the map clicks
     this.mapClick = function( map, event ) {
@@ -123,14 +137,15 @@ var ViewModel = function( locations, markerTypes, map ) {
             self.selectedLocation( marker.parent || self.currentLocation() );
             ib.open(map, marker);
             // add bounce animation to the marker
-            if (marker.getAnimation() != null) {
+            if (marker.getAnimation() != null && marker != bouncingMarker ) {
                 marker.setAnimation(null);
             }
-            else {  
-                if( bouncingMarker.setAnimation )
-                {
+            else {
+                // Bouncing marker animation exists?  
+                if( bouncingMarker.setAnimation ) {
                     bouncingMarker.setAnimation(null);    
                 }
+                //Animate the clicked marker    
                 marker.setAnimation(google.maps.Animation.BOUNCE);
                 bouncingMarker = marker;
             }
@@ -147,6 +162,9 @@ var ViewModel = function( locations, markerTypes, map ) {
             return location;
         } )
     );
+
+    // ** Infobox methods
+    //
 
     // manage the keypress of the of the filter input
     this.filterKeyPress = function( model, event) {
@@ -166,17 +184,21 @@ var ViewModel = function( locations, markerTypes, map ) {
         // transform the text to lower case to be compared
         text = text.toLowerCase();
 
+        // hide infobox from the selected marker
+        self.selectedLocation().googleMarker().$infobox.addClass('infobox-hide'); 
+
         // toggle the visibility of the location comparing the location's name
         // with the input text
         self.locations().forEach( function( location ) {
-            if( location.name().toLowerCase().indexOf( text ) > -1 )
-            {
+            if( location.name().toLowerCase().indexOf( text ) > -1 ) {
                 location.isVisible( true );
                 location.googleMarker().setMap( self.map );
             } 
             else {
                 location.isVisible( false );
-                location.googleMarker().setMap( null );                
+                // removes marker from the map
+                location.googleMarker().setMap( null );
+                           
             }
         } );
     };
