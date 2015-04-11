@@ -4,6 +4,7 @@ function MarkerType( markerType ) {
     this.type = ko.observable( markerType.type || '' );
     this.url = ko.observable( markerType.url || '');
     this.title = ko.observable( markerType.title || '');
+    this.remote = ko.observable( markerType.remote || '' );
 }
 
 // Starting Marker Types 
