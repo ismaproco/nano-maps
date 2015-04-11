@@ -48,6 +48,9 @@ http://stackoverflow.com/questions/7396722/hide-local-listings-from-google-maps-
 
 - Using the knockout observable properties I was able to show and hide markers and list items adding a isVisible property in the location model, and creating some custom logic to filter the items with the text input.
 
+- With the adding of the filtering I had some visual bugs were the infobox keep showing, It took me some time to solve this bugs, but once they get complete the project is now fully functional withouth the adding of any external API.
+
+
 Resources
 ---------
 
