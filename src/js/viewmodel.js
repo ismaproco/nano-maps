@@ -3,6 +3,7 @@ var ViewModel = function( locations, markerTypes, map ) {
     var self = this;
     var locations = locations || [];
     var markerTypes = markerTypes || [];
+    var bouncingMarker = {};
 
     // build the markerType observable Array
     this.markerTypes = ko.observableArray( Object.keys(markerTypes).map(function(key){
@@ -84,7 +85,8 @@ var ViewModel = function( locations, markerTypes, map ) {
           position: new google.maps.LatLng(lat, lng),
           map: map,
           icon: location.type().url(),
-          title: location.name()
+          title: location.name(),
+          animation: google.maps.Animation.DROP,
         });
 
         // set the google marker of the currentLocation.
@@ -120,6 +122,18 @@ var ViewModel = function( locations, markerTypes, map ) {
             // if not is a temporary marker
             self.selectedLocation( marker.parent || self.currentLocation() );
             ib.open(map, marker);
+            // add bounce animation to the marker
+            if (marker.getAnimation() != null) {
+                marker.setAnimation(null);
+            }
+            else {  
+                if( bouncingMarker.setAnimation )
+                {
+                    bouncingMarker.setAnimation(null);    
+                }
+                marker.setAnimation(google.maps.Animation.BOUNCE);
+                bouncingMarker = marker;
+            }
         } );
     }
 
@@ -162,7 +176,7 @@ var ViewModel = function( locations, markerTypes, map ) {
             } 
             else {
                 location.isVisible( false );
-                location.googleMarker().setMap( null );
+                location.googleMarker().setMap( null );                
             }
         } );
     };
