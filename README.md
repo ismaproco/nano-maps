@@ -50,6 +50,13 @@ http://stackoverflow.com/questions/7396722/hide-local-listings-from-google-maps-
 
 - With the adding of the filtering I had some visual bugs were the infobox keep showing, It took me some time to solve this bugs, but once they get complete the project is now fully functional withouth the adding of any external API.
 
+- I try to implement the google maps places library in the project, it was quite easy with the list and the map already working, I used and example from here:
+https://developers.google.com/maps/documentation/javascript/places
+
+- Then I had some trouble managing the google searching types options, so I did a quick seach and found this good specification:
+https://developers.google.com/places/supported_types
+
+
 
 Resources
 ---------
