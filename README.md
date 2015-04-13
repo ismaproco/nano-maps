@@ -26,9 +26,9 @@ I implement a grunt automation script called Gruntfile.js to build the project, 
 - Compress and Copy the images to the build folder.
 
 To execute the build, just run the following command in the project root
-'''
+```
 grunt
-'''
+```
 
 
 Development Process 
