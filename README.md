@@ -1,10 +1,12 @@
 # nano-maps
 
-Nano Maps is the 5th project in the nano degree process, basically it shows the interesting locations in a Map, using google API, and Instagram API to gather places information. 
+Nano Maps is the 5th project in the nano degree process, basically it shows the interesting locations in a Map, using google API, and Instagram API to gather places information through ajax, it also lets you add/remove/modify locations in the map. 
 
-It uses bootstrap for the application styling for and layout system. And Knockout as the front end organizational framework.
+It uses bootstrap (http://getbootstrap.com/) for the application styling for and layout system. And Knockout (http://knockoutjs.com/) as the front end organizational framework.
 
-Also has a bower addition to gather the required external libraries without any hassle. The added libraries are: 
+I added bower (http://bower.io/) to manage the javascript libraries dependencies. 
+
+The added libraries are: 
 
 - jQuery
 - Underscore
@@ -12,6 +14,7 @@ Also has a bower addition to gather the required external libraries without any 
 - bootstrap
 
 Live Example:
+-------------------
 http://ismapro.co/nanomaps/
 
 
