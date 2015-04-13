@@ -1,8 +1,38 @@
 # nano-maps
 
+Nano Maps is the 5th project in the nano degree process, basically it shows the interesting locations in a Map, using google API, and Instagram API to gather places information. 
+
+It uses bootstrap for the application styling for and layout system. And Knockout as the front end organizational framework.
+
+Also has a bower addition to gather the required external libraries without any hassle. The added libraries are: 
+
+- jQuery
+- Underscore
+- KnockoutJS
+- bootstrap
+
+Live Example:
+http://ismapro.co/nanomaps/
+
+
+Build Process
+-------------------
+I implement a grunt automation script called Gruntfile.js to build the project, which basically do the following steps.
+
+- Move the bootstrap fonts to the build folder.
+- Minify and Copy the css files to the build folder.
+- Minify and Copy the html files to the build folder.
+- Minify and Copy the js files to the build folder.
+- Compress and Copy the images to the build folder.
+
+To execute the build, just run the following command in the project root
+'''
+grunt
+'''
+
+
 Development Process 
 -------------------
-
 
 - The first step was to decide the libraries that are going to be used along with this project, in my first draft the required libraries are:
  - bower: Dependency grabber to manage the javascript libraries.
