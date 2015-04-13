@@ -5,8 +5,7 @@ function Location( marker )
     this.name = ko.observable ( marker.name || '' );
     this.lat = ko.observable ( marker.lat || '' );
     this.lng = ko.observable ( marker.lng || '' );
-    this.metaTags = ko.observable ( [] );
-    this.links = ko.observable ( [] );
+    this.imageUrl = ko.observable ( marker.imageUrl || '' );
     // set the default markerType as none
     this.type = ko.observable ( marker.type || markerTypes.none );
     this.googleMarker = ko.observable ( marker.googleMarker || {} );

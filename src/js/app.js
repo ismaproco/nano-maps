@@ -5,7 +5,7 @@ function initialize() {
         var mapOptions = {
           center: { lat: 52.2375111, lng: 21.0111977},
           zoom: 14,
-
+          disableDefaultUI: true
         };
         var map = new google.maps.Map(document.getElementById('map'),
             mapOptions);

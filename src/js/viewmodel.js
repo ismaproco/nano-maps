@@ -79,13 +79,29 @@ var ViewModel = function( locations, markerTypes, map ) {
         location.lat( lat );
         location.lng( lng );
 
+        // load the marker url and resize it to the given value in runtime
+        var pinIcon = new google.maps.MarkerImage(
+            location.type().url(),
+            null,
+            null,
+            null,
+            new google.maps.Size(42, 42)
+        );
+
+        // set the clickable shape of the marker
+        var shape = {
+          coords: [10, 10, 10, 35, 35, 35, 35 , 10],
+          type: 'poly'
+        };
+
         // Create the google marker
         var marker = new google.maps.Marker({
           position: new google.maps.LatLng(lat, lng),
           map: map,
-          icon: location.type().url(),
+          icon: pinIcon,
           title: location.name(),
           animation: google.maps.Animation.DROP,
+          shape: shape
         });
 
         // set the google marker of the temporaryLocation.
@@ -223,6 +239,111 @@ var ViewModel = function( locations, markerTypes, map ) {
         } );
     };
 
+    //** Google places API methods
+    //
+
+    this.getListOfGooglePlaces = function( ) {
+
+        function callback(results, status) {
+          if (status == google.maps.places.PlacesServiceStatus.OK) {
+            for (var i = 0; i < results.length; i++) {
+              var place = results[i];
+                
+                // set the location properties
+                var location = new Location({
+                    name: place.name ,
+                    lat: place.geometry.location.k,
+                    lng: place.geometry.location.D,
+                    type: self.getMarkerTypeByGoogle(place.types)
+                });
+
+                // add marker to the map view
+                self.addMarkerToView( 
+                        self.map, location,location.lat(), location.lng() );
+                // set the googleMarker parent as the respective location.
+                location.googleMarker().parent = location;
+                self.locations.push( location );
+            }
+          }
+        }
+
+        var locationCoordinates = new google.maps.LatLng( 52.2375111 , 21.0111977 );
+
+          var request = {
+            location: locationCoordinates,
+            radius: '3000',
+            types: [ 'restaurant', 'bar', 'cafe', 'movie_theater', 'aquarium' ]
+          };
+
+          service = new google.maps.places.PlacesService(map);
+          // search for the first 20 places
+          service.nearbySearch(request, callback);
+          
+    };
+
+    // get marker type from google place type
+    this.getMarkerTypeByGoogle = function( types )
+    {
+        // returns the markerType for the respective google place type 
+        if( _.contains( types, 'restaurant' ) ) {
+            return markerTypes.restaurant;
+        } else if( _.contains( types, 'cafe' ) ) {
+            return markerTypes.coffee;
+        } else if( _.contains( types, 'bar' ) ) {
+            return markerTypes.bar;
+        } else if( _.contains( types, 'movie_theater' ) ) {
+            return markerTypes.movies;
+        } else if( _.contains( types, 'aquarium' ) ) {
+            return markerTypes.diving;
+        }
+    };
+
+    //** Instagram API Methods
+    //
+
+    this.getListOfInstagramPlaces = function( ) {
+        var url = 'https://api.instagram.com/v1/media/search';
+        var lat = 52.2375111;
+        var lng = 21.0111977;
+        var client = 'ebeaa3a1b977409795c334ba887232f4';
+        var distance = 2000;
+
+        // do JSONP call to the instagram api to get the list of locations
+        $.ajax({
+          method: 'GET',
+          url: url,
+          dataType: 'jsonp',
+          jsonp: 'callback',
+          data: { lat: lat, lng: lng, client_id: client, distance: distance }
+        })
+        .done(function( results ) {
+            for (var i = 0; i < results.data.length; i++) {
+                var place = results.data[i];
+                
+                var instagramMarkerType = 
+                        new MarkerType({ url: place.images.thumbnail.url });
+                
+                // set the location properties
+                var location = new Location({
+                    name: place.location.name || 'No location name',
+                    lat: place.location.latitude,
+                    lng: place.location.longitude,
+                    type: instagramMarkerType
+                });
+
+                // add marker to the map view
+                self.addMarkerToView( 
+                        self.map, location,location.lat(), location.lng() );
+                // set the googleMarker parent as the respective location.
+                location.googleMarker().parent = location;
+                self.locations.push( location );
+            }
+        })
+        .fail(function( msg ) {
+            alert( "fail Saved: " + msg );
+        });
+    };
+
     //** Model initialization
     //
 
@@ -243,51 +364,10 @@ var ViewModel = function( locations, markerTypes, map ) {
         } )
     );
 
-    //** Google places API methods
-    //
-
-    this.getListOfPlacesGoogle = function( markerType, googleType ) {
-
-        function callback(results, status) {
-          if (status == google.maps.places.PlacesServiceStatus.OK) {
-            for (var i = 0; i < results.length; i++) {
-              var place = results[i];
-
-                var location = new Location({
-                    name: results[i].name ,
-                    lat: results[i].geometry.location.k,
-                    lng: results[i].geometry.location.D,
-                    type: markerType
-                });
-
-
-                self.addMarkerToView( 
-                        self.map, location,location.lat(), location.lng() );
-                // set the googleMarker parent as the respective location.
-                location.googleMarker().parent = location;
-                self.locations.push( location );
-
-            }
-          }
-        }
-
-        var locationCoordinates = new google.maps.LatLng( 52.2375111 , 21.0111977 );
-
-          var request = {
-            location: locationCoordinates,
-            radius: '3000',
-            types: [ googleType ]
-          };
-
-          service = new google.maps.places.PlacesService(map);
-          service.nearbySearch(request, callback);
-    }
-
     // get google places from the API.
-    this.getListOfPlacesGoogle( markerTypes.restaurant, 'restaurant' );
-    this.getListOfPlacesGoogle( markerTypes.bar, 'bar' );
-    this.getListOfPlacesGoogle( markerTypes.coffee, 'cafe' );
-    this.getListOfPlacesGoogle( markerTypes.movies, 'movie_theater' );
-    this.getListOfPlacesGoogle( markerTypes.diving, 'aquarium' );
+    this.getListOfGooglePlaces( );
+
+    // get google places from the Instagram API
+    this.getListOfInstagramPlaces( );
 
 }
