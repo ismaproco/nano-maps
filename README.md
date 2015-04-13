@@ -56,6 +56,11 @@ https://developers.google.com/maps/documentation/javascript/places
 - Then I had some trouble managing the google searching types options, so I did a quick seach and found this good specification:
 https://developers.google.com/places/supported_types
 
+- Trying to implement the Instagram API I found the only way to get results was using the jsonp type property, so the cross-browsing issue will not apply.
+
+- I got a problem setting the instagram images as markers but I found this awesome answer in stackoverflow on how to resize images in runtime.
+http://stackoverflow.com/questions/7842730/change-marker-size-in-google-maps-v3
+
 
 
 Resources
