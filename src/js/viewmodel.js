@@ -188,6 +188,11 @@ var ViewModel = function( markerTypes ) {
     // select the location    
     this.selectLocation = function( location ) {
         self.selectMarker( location.googleMarker() );
+        
+        // hides the left-bar if is in mobile
+        if( $('.collapsed').is(':visible') ) {
+            $("#wrapper").toggleClass('toggled');
+        }
     }
 
     // add locations array to the locations object
@@ -272,6 +277,11 @@ var ViewModel = function( markerTypes ) {
                            
             }
         } );
+
+        // hides the left-bar if is in mobile
+        if( $('.collapsed').is(':visible') ) {
+            $("#wrapper").toggleClass('toggled');
+        }
     };
 
     //** Google places API methods
