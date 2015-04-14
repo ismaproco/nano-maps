@@ -196,7 +196,7 @@ var ViewModel = function( markerTypes ) {
         self.selectMarker( location.googleMarker() );
 
         // hides the left-bar if is in mobile
-        if( $(window).width() < 768 ) {
+        if( $('.collapsed').is(':visible') ) {
             $("#wrapper").toggleClass('toggled');
         }
     }
@@ -285,7 +285,7 @@ var ViewModel = function( markerTypes ) {
         } );
 
         // hides the left-bar if is in mobile
-        if( $(window).width() < 768 ) {
+        if( $('.collapsed').is(':visible') ) {
             $("#wrapper").toggleClass('toggled');
         }
     };
