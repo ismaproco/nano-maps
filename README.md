@@ -94,6 +94,9 @@ https://developers.google.com/places/supported_types
 - I got a problem setting the instagram images as markers but I found this awesome answer in stackoverflow on how to resize images in runtime.
 http://stackoverflow.com/questions/7842730/change-marker-size-in-google-maps-v3
 
+- I had some trouble hiding and showing a left side menu, but I found this amazing post of how to do it using bootstrap, and a little of jquery. it works very well.
+http://startbootstrap.com/template-overviews/simple-sidebar/
+
 
 
 Resources
