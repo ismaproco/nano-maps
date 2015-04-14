@@ -205,6 +205,7 @@ var ViewModel = function( markerTypes ) {
     // hides the left panel
     this.toggleLeftPanel = function( ) {
         $("#wrapper").toggleClass("toggled");
+        google.maps.event.trigger(self.map, 'resize' );
     }
 
     // ** Filter methods
@@ -342,15 +343,13 @@ var ViewModel = function( markerTypes ) {
         for (var i = 0; i < results.data.length; i++) {
             var place = results.data[i];
             
-            var instagramMarkerType = 
-                    new MarkerType({ url: place.images.thumbnail.url });
-            
             // set the location properties
             var location = new Location({
                 name: place.location.name || 'No location name',
                 lat: place.location.latitude,
                 lng: place.location.longitude,
-                type: instagramMarkerType
+                imageUrl: place.images.thumbnail.url,
+                type: markerTypes.instagram
             });
 
             // add marker to the map view

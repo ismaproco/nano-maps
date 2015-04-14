@@ -4,14 +4,14 @@ function MarkerType( markerType ) {
     this.type = ko.observable( markerType.type || '' );
     this.url = ko.observable( markerType.url || '');
     this.title = ko.observable( markerType.title || '');
-    this.remote = ko.observable( markerType.remote || '' );
+    this.selection = ko.observable( markerType.selection || 'map' );
 }
 
 // Starting Marker Types 
 
 var markerTypes = {
     none: new MarkerType ( 
-        { type:'none', url:'images/pin_small.png', title: 'None' } 
+        { type:'none', url:'images/pin_small.png', title: 'None'} 
     ),
     restaurant: new MarkerType ( 
         { type:'restaurant', url:'images/Apple.png', title: 'Restaurant' } 
@@ -27,5 +27,8 @@ var markerTypes = {
     ),
     movies: new MarkerType ( 
         { type:'movies', url:'images/Movierollsmall.png', title: 'Movies' } 
+    ),
+    instagram: new MarkerType ( 
+        { type:'picture', url:'images/Compactcam.png', title: 'Instagram', selection: 'none' } 
     ),
 };

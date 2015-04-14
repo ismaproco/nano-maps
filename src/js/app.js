@@ -39,7 +39,7 @@ if( typeof( google ) != 'undefined' ) {
     google.maps.event.addDomListener(window, 'load', initialize);    
 }
 
-// create the ViewModel with the created makers and current map
+// create the ViewModels with the created makers and current map
 var viewModel = new ViewModel( markerTypes );
 // bind a new instance of the viewModel to the page
 ko.applyBindings(viewModel);
