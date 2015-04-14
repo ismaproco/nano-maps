@@ -172,7 +172,13 @@ var ViewModel = function( markerTypes ) {
             //Animate the clicked marker    
             marker.setAnimation(google.maps.Animation.BOUNCE);
             bouncingMarker = marker;
-        }   
+        }
+
+        //center the google map
+        var mapPosition = new google.maps.LatLng( 
+                        marker.getPosition().k  , marker.getPosition().D - 0.01);
+        self.map.setCenter( mapPosition );
+
     }
 
 
@@ -188,9 +194,9 @@ var ViewModel = function( markerTypes ) {
     // select the location    
     this.selectLocation = function( location ) {
         self.selectMarker( location.googleMarker() );
-        
+
         // hides the left-bar if is in mobile
-        if( $('.collapsed').is(':visible') ) {
+        if( $(window).width() < 768 ) {
             $("#wrapper").toggleClass('toggled');
         }
     }
@@ -279,7 +285,7 @@ var ViewModel = function( markerTypes ) {
         } );
 
         // hides the left-bar if is in mobile
-        if( $('.collapsed').is(':visible') ) {
+        if( $(window).width() < 768 ) {
             $("#wrapper").toggleClass('toggled');
         }
     };
