@@ -123,7 +123,12 @@ function InfoBox(opt_opts) {
 
 /* InfoBox extends OverlayView in the Google Maps API v3.
  */
-InfoBox.prototype = new google.maps.OverlayView();
+
+//check if the google library was loaded
+if( typeof( google ) !=  'undefined') {
+  InfoBox.prototype = new google.maps.OverlayView();
+}
+
 
 /**
  * Creates the DIV representing the InfoBox.

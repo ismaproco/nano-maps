@@ -9,12 +9,12 @@ function Location( marker )
     // set the default markerType as none
     this.type = ko.observable ( marker.type || markerTypes.none );
     this.googleMarker = ko.observable ( marker.googleMarker || {} );
-    this.isVisible = ko.observable(true);
+    this.isVisible = ko.observable( true );
 }
 
 // Starting Markers 
 
-var locations = [
+var defaultLocations = [
     new Location({
         name:'Awesome Fish',
         lat: 52.235474460511696,

@@ -1,12 +1,17 @@
 // the main ViewModel
-var ViewModel = function( locations, markerTypes, map ) {
+var ViewModel = function( markerTypes ) {
     var self = this;
-    var locations = locations || [];
     var markerTypes = markerTypes || [];
     var bouncingMarker = {};
 
     // reference of the google map object
-    this.map = map;
+    this.map = {};
+
+    // reference of the locations object
+    this.locations = ko.observableArray( );
+    this.warningMessageVisible = ko.observable( false );
+    this.warningMessage = ko.observable( 'The map could not be loaded' );
+    this.leftPanelIsVisible = ko.observable( true );
 
     // initialize the current and selected markers with empty objects
     this.temporaryLocation = ko.observable( new Location( { } ) );
@@ -14,6 +19,18 @@ var ViewModel = function( locations, markerTypes, map ) {
     // observable to store the filter value of the filtered textbox
     this.filter = ko.observable('');
 
+    //** Map Operations
+    //
+
+    // set the loaded map
+    this.setMap = function ( map ) {
+        self.map = map;
+    }
+
+    // get the map
+    this.getMap = function ( ) {
+        return self.map;
+    }
 
     //** Marker Operations
     //
@@ -45,7 +62,7 @@ var ViewModel = function( locations, markerTypes, map ) {
         //remove the marker from the map
         self.selectedLocation().googleMarker().setMap(null);
         // remove the marker from the observable array
-        self.locations.remove(self.selectedLocation());
+        self.locations.remove( self.selectedLocation() );
     };
 
     // hide infobox of the selected location
@@ -142,7 +159,7 @@ var ViewModel = function( locations, markerTypes, map ) {
         // if the marker.parent exists is a saved marker.
         // if not is a temporary marker
         self.selectedLocation( marker.parent || self.temporaryLocation() );
-        marker.ib.open(map, marker);
+        marker.ib.open(self.map, marker);
         // add bounce animation to the marker
         if (marker.getAnimation() != null && marker != bouncingMarker ) {
             marker.setAnimation(null);
@@ -173,6 +190,22 @@ var ViewModel = function( locations, markerTypes, map ) {
         self.selectMarker( location.googleMarker() );
     }
 
+    // add locations array to the locations object
+    this.addLocationsToMap = function( locationsArray ) {
+        locationsArray.forEach( function (location) {
+            self.addMarkerToView( 
+                        self.map, location,location.lat(), location.lng() );
+            // set the googleMarker parent as the respective location.
+            location.googleMarker().parent = location;
+
+            self.locations.push( location );
+        } );
+    };
+
+    // hides the left panel
+    this.toggleLeftPanel = function( ) {
+        $("#wrapper").toggleClass("toggled");
+    }
 
     // ** Filter methods
     //
@@ -242,13 +275,14 @@ var ViewModel = function( locations, markerTypes, map ) {
     //** Google places API methods
     //
 
-    this.getListOfGooglePlaces = function( ) {
-
-        function callback(results, status) {
-          if (status == google.maps.places.PlacesServiceStatus.OK) {
+    // callback function of the Google API
+    this.googleAPICallback = function( results, status ) {
+        // the places library is enabled?
+        if (status == google.maps.places.PlacesServiceStatus.OK) {
+            // loop the results and create the locations
             for (var i = 0; i < results.length; i++) {
-              var place = results[i];
-                
+                var place = results[i];
+            
                 // set the location properties
                 var location = new Location({
                     name: place.name ,
@@ -264,21 +298,23 @@ var ViewModel = function( locations, markerTypes, map ) {
                 location.googleMarker().parent = location;
                 self.locations.push( location );
             }
-          }
         }
+    }
+
+    // Get the list of google places
+    this.getListOfGooglePlaces = function( ) {
 
         var locationCoordinates = new google.maps.LatLng( 52.2375111 , 21.0111977 );
 
-          var request = {
+        var request = {
             location: locationCoordinates,
             radius: '3000',
             types: [ 'restaurant', 'bar', 'cafe', 'movie_theater', 'aquarium' ]
-          };
+        };
 
-          service = new google.maps.places.PlacesService(map);
-          // search for the first 20 places
-          service.nearbySearch(request, callback);
-          
+        service = new google.maps.places.PlacesService( self.map );
+        // search for the first 20 places
+        service.nearbySearch( request, this.googleAPICallback );
     };
 
     // get marker type from google place type
@@ -301,6 +337,32 @@ var ViewModel = function( locations, markerTypes, map ) {
     //** Instagram API Methods
     //
 
+    // callback function for the instagram API call.
+    this.instagramAPICallback = function( results ) {
+        for (var i = 0; i < results.data.length; i++) {
+            var place = results.data[i];
+            
+            var instagramMarkerType = 
+                    new MarkerType({ url: place.images.thumbnail.url });
+            
+            // set the location properties
+            var location = new Location({
+                name: place.location.name || 'No location name',
+                lat: place.location.latitude,
+                lng: place.location.longitude,
+                type: instagramMarkerType
+            });
+
+            // add marker to the map view
+            self.addMarkerToView( 
+                    self.map, location,location.lat(), location.lng() );
+            // set the googleMarker parent as the respective location.
+            location.googleMarker().parent = location;
+            self.locations.push( location );
+        }
+    };
+
+    // get a list of the instagram places doing the ajax call
     this.getListOfInstagramPlaces = function( ) {
         var url = 'https://api.instagram.com/v1/media/search';
         var lat = 52.2375111;
@@ -316,31 +378,9 @@ var ViewModel = function( locations, markerTypes, map ) {
           jsonp: 'callback',
           data: { lat: lat, lng: lng, client_id: client, distance: distance }
         })
-        .done(function( results ) {
-            for (var i = 0; i < results.data.length; i++) {
-                var place = results.data[i];
-                
-                var instagramMarkerType = 
-                        new MarkerType({ url: place.images.thumbnail.url });
-                
-                // set the location properties
-                var location = new Location({
-                    name: place.location.name || 'No location name',
-                    lat: place.location.latitude,
-                    lng: place.location.longitude,
-                    type: instagramMarkerType
-                });
-
-                // add marker to the map view
-                self.addMarkerToView( 
-                        self.map, location,location.lat(), location.lng() );
-                // set the googleMarker parent as the respective location.
-                location.googleMarker().parent = location;
-                self.locations.push( location );
-            }
-        })
+        .done( this.instagramAPICallback )
         .fail(function( msg ) {
-            alert( "fail Saved: " + msg );
+            console.log('could not connect to instagram to get the images.')
         });
     };
 
@@ -352,22 +392,28 @@ var ViewModel = function( locations, markerTypes, map ) {
         return markerTypes[key];
     }));
 
+    // Initialize the model locations
+    this.initilizeLocations = function( ) {
+        // add the default locations to the map
+        this.addLocationsToMap( defaultLocations );
 
-    // add the default locations to the map
-    this.locations = ko.observableArray( 
-        locations.map( function ( location ) {
-            self.addMarkerToView( 
-                        self.map, location,location.lat(), location.lng() );
-            // set the googleMarker parent as the respective location.
-            location.googleMarker().parent = location;
-            return location;
-        } )
-    );
+        // get google places from the API.
+        this.getListOfGooglePlaces( );
 
-    // get google places from the API.
-    this.getListOfGooglePlaces( );
+        // get google places from the Instagram API
+        this.getListOfInstagramPlaces( );
+    }
 
-    // get google places from the Instagram API
-    this.getListOfInstagramPlaces( );
+    //** Map loading validation
+    //
+
+    this.mapTimeout = function( ) { 
+
+            setTimeout(function(  ) {
+                if( typeof( google ) == 'undefined' ) {
+                    self.warningMessageVisible( true );    
+                }
+            }, 5000 );
+    }();
 
 }
