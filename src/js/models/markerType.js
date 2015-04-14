@@ -31,4 +31,7 @@ var markerTypes = {
     instagram: new MarkerType ( 
         { type:'picture', url:'images/Compactcam.png', title: 'Instagram', selection: 'none' } 
     ),
+    foursquare: new MarkerType ( 
+        { type:'foursquare', url:'images/foursquare.png', title: 'Foursquare', selection: 'none' } 
+    ),
 };

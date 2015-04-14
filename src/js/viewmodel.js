@@ -216,7 +216,6 @@ var ViewModel = function( markerTypes ) {
     // hides the left panel
     this.toggleLeftPanel = function( ) {
         $("#wrapper").toggleClass('toggled');
-        google.maps.event.trigger(self.map, 'resize' );
         $('.navbar-collapse').collapse('hide');
     }
 
@@ -400,6 +399,60 @@ var ViewModel = function( markerTypes ) {
         });
     };
 
+    //** Foursquare API Methods
+
+    this.foursquareAPICallback = function( results ) {
+        if( results.response.venues ) {
+            results.response.venues.forEach( function( venue ) {
+
+                // set the location properties
+                var location = new Location({
+                    name: venue.name ,
+                    lat: venue.location.lat,
+                    lng: venue.location.lng,
+                    type: markerTypes.foursquare
+                });
+
+                // add marker to the map view
+                self.addMarkerToView( 
+                        self.map, location,location.lat(), location.lng() );
+                // set the googleMarker parent as the respective location.
+                location.googleMarker().parent = location;
+                self.locations.push( location );
+            } )
+        }
+    };
+
+    // get a list of the foursquare places doing the ajax call
+    this.getListOfFoursquarePlaces = function( ) {
+        // variable definition
+        var url = 'https://api.foursquare.com/v2/venues/search';
+        var client_id = 'ZY2GSR1TAGZQDZQ0TRLIJ52VRCAOM0HWV4DPN413PIHW3RLQ';
+        var client_secret = 'PDIFLQS5ETZJN5BQII51145H4BLN2O4TWI2DWKEVWGJXRRYT';
+        var ll = '52.2375111,21.0111977';
+        var v = '20130815';
+        var query = 'restaurant,bar';
+
+        // do JSONP call to the foursquare api to get the list of locations
+        $.ajax({
+          method: 'GET',
+          url: url,
+          dataType: 'jsonp',
+          jsonp: 'callback',
+          data: { 
+                    client_id: client_id, 
+                    client_secret: client_secret, 
+                    ll: ll, 
+                    v: v, 
+                    query: query 
+                }
+        })
+        .done( this.foursquareAPICallback )
+        .fail(function( msg ) {
+            console.log('could not connect to foursquare to get locations.')
+        });
+    }
+
     //** Model initialization
     //
 
@@ -416,8 +469,18 @@ var ViewModel = function( markerTypes ) {
         // get google places from the API.
         this.getListOfGooglePlaces( );
 
-        // get google places from the Instagram API
+        // get instagram photo-places from the Instagram API
         this.getListOfInstagramPlaces( );
+
+        // get foursquare places from the Foursquare API
+        this.getListOfFoursquarePlaces( );
+    }
+
+    //** About page
+    //
+
+    this.showAboutMessage = function() {
+        alert('NANODEGREE \nNano-Maps Project 5\n @ismapro 2015');
     }
 
     //** Map loading validation
@@ -427,7 +490,11 @@ var ViewModel = function( markerTypes ) {
 
             setTimeout(function(  ) {
                 if( typeof( google ) == 'undefined' ) {
-                    self.warningMessageVisible( true );    
+                    self.warningMessageVisible( true );
+                    // hides the left-bar
+                    if( !$('#wrapper').hasClass('toggled') ) {
+                        $("#wrapper").toggleClass('toggled');
+                    }
                 }
             }, 5000 );
     }();
