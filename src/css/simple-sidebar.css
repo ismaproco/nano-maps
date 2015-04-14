@@ -22,6 +22,7 @@
     height: 100%;
     margin-left: -250px;
     overflow-y: auto;
+    overflow-x: hidden; 
     background: #fff;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
