@@ -7,11 +7,9 @@
     <title>nano-maps</title>
     <!-- bootstrap css -->
     <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
-
     <!-- application css -->
     <link rel="stylesheet" type="text/css" href="css/styles.css">
-
-
+    <link rel="stylesheet" type="text/css" href="css/simple-sidebar.css">
 </head>
 <body>
 
@@ -30,42 +28,53 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#makerlist"><span class="glyphicon glyphicon-list" aria-hidden="true"></span>&nbsp;Locations List</a></li>
+            <li data-bind="click: toggleLeftPanel"><a href="#makerlist"><span class="glyphicon glyphicon-list" aria-hidden="true"></span>&nbsp;Locations List</a></li>
             <li><a href="#about"><span class="glyphicon glyphicon-sunglasses" aria-hidden="true"></span>&nbsp;About</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
 
-
-    <!-- layout -->
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-8 full-height">
-                <!-- map container -->
-                <div class="map-container" id="map"></div>            
-            </div>
-            <div class="col-md-4 no-gutter overflow full-height">
-                <div class="filter-section" >
-                    <input type="text" 
-                            data-bind="textInput: filter, event: { 'keypress': filterKeyPress, 'keyup': filterKeyEvent }"></input>
-                    <span class="glyphicon glyphicon-search input-search" aria-hidden="true"></span>
-                    <div data-bind="foreach: markerTypes">
-                        <div class="marker-type" data-bind="click: $parent.filterLocationsByType">
-                            <img data-bind="attr: { src: url, alt: title }">
-                            <span data-bind="text: title"></span>
-                        </div>
+    <div id="wrapper">
+<!-- Sidebar -->
+    <div id="sidebar-wrapper">
+        <div class="sidebar-nav full-height" data-bind="visible: leftPanelIsVisible">
+            <div class="filter-section" >
+                <input type="text" 
+                        data-bind="textInput: filter, event: { 'keypress': filterKeyPress, 'keyup': filterKeyEvent }"></input>
+                <span class="glyphicon glyphicon-search input-search" aria-hidden="true"></span>
+                <div data-bind="foreach: markerTypes">
+                    <div class="marker-type" data-bind="click: $parent.filterLocationsByType">
+                        <img data-bind="attr: { src: url, alt: title }">
+                        <span data-bind="text: title"></span>
                     </div>
                 </div>
-                <!-- list container -->
-                <ul class="locations-list" data-bind="foreach: locations">
-                    <li data-bind="visible: isVisible, click: $parent.selectLocation">
-                        <img data-bind="attr: { src: type().url() , alt: type }">
-                        <span data-bind="text: name"></span>
-                    </li>
-                </ul>
+            </div>
+            <!-- list container -->
+            <ul class="locations-list" data-bind="foreach: locations">
+                <li data-bind="visible: isVisible, click: $parent.selectLocation">
+                    <img data-bind="attr: { src: type().url() , alt: type }">
+                    <span data-bind="text: name"></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- layout -->
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12 col-md-12 full-height map-panel">
+                    <!-- map container -->
+                    <div class="map-container" id="map"></div>            
+                </div>
+            </div>
+            <div class="row full-height warning" data-bind="visible: warningMessageVisible">
+                <div data-bind="text: warningMessage"></div>
             </div>
         </div>
+    </div>
     </div>
 
     <!-- infobox html for the markers -->
