@@ -204,8 +204,9 @@ var ViewModel = function( markerTypes ) {
 
     // hides the left panel
     this.toggleLeftPanel = function( ) {
-        $("#wrapper").toggleClass("toggled");
+        $("#wrapper").toggleClass('toggled');
         google.maps.event.trigger(self.map, 'resize' );
+        $('.navbar-collapse').collapse('hide');
     }
 
     // ** Filter methods
