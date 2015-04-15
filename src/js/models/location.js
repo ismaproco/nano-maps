@@ -6,6 +6,13 @@ function Location( marker )
     this.lat = ko.observable ( marker.lat || '' );
     this.lng = ko.observable ( marker.lng || '' );
     this.imageUrl = ko.observable ( marker.imageUrl || '' );
+    this.address = ko.observable( marker.address || '' );
+    this.phoneNumber = ko.observable( marker.phoneNumber || '');
+    this.rating = ko.observable( marker.rating || '');
+    this.metatags = ko.observable( marker.metatags || [] );
+    this.meta = ko.computed( function( ){ 
+        return this.metatags().join(', ');
+    }, this);
     // set the default markerType as none
     this.type = ko.observable ( marker.type || markerTypes.none );
     this.googleMarker = ko.observable ( marker.googleMarker || {} );

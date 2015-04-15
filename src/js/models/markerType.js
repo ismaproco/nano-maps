@@ -22,9 +22,6 @@ var markerTypes = {
     coffee: new MarkerType ( 
         { type:'coffe', url:'images/Coffecan.png', title: 'Coffee' } 
     ),
-    diving: new MarkerType ( 
-        { type:'diving', url:'images/Diving.png', title: 'Diving' } 
-    ),
     movies: new MarkerType ( 
         { type:'movies', url:'images/Movierollsmall.png', title: 'Movies' } 
     ),
@@ -33,5 +30,8 @@ var markerTypes = {
     ),
     foursquare: new MarkerType ( 
         { type:'foursquare', url:'images/foursquare.png', title: 'Foursquare', selection: 'none' } 
+    ),
+    lastfm: new MarkerType ( 
+        { type:'lastfm', url:'images/Lastfm.png', title: 'LastFM', selection: 'none' } 
     ),
 };
