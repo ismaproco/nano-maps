@@ -97,6 +97,8 @@ http://stackoverflow.com/questions/7842730/change-marker-size-in-google-maps-v3
 - I had some trouble hiding and showing a left side menu, but I found this amazing post of how to do it using bootstrap, and a little of jquery. it works very well.
 http://startbootstrap.com/template-overviews/simple-sidebar/
 
+- After the Submission I had some issues with the formatting of my JavaScript sintax, especially with a lot of missing semicolons, the reviewer give the tip of use jshint as part of my build process. So I added the the jshint to the build tasks, and that improved my code sintax.
+
 
 
 Resources
@@ -133,3 +135,7 @@ https://code.google.com/p/google-maps-utility-library-v3/
 - Blog post explaining the use of computed observer to filter observedArrays
 
 http://blog.stevensanderson.com/2013/12/03/knockout-projections-a-plugin-for-efficient-observable-array-transformations/
+
+- Github page for the JShint project
+
+https://github.com/gruntjs/grunt-contrib-jshint
