@@ -3,6 +3,18 @@ var mozjpeg = require('imagemin-mozjpeg');
 module.exports = function (grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        jshint: {
+            options: {
+                curly: true,
+                eqeqeq: true,
+                eqnull: true,
+                browser: true,
+                globals: {
+                    jQuery: true
+                },
+            },
+            uses_defaults: ['src/js/**/*.js'],
+        },
         copy: {
             dist: {
                 files: [{
@@ -92,6 +104,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
     grunt.loadNpmTasks('grunt-contrib-imagemin');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
 
-    grunt.registerTask('default', ['copy:dist','cssmin', 'uglify','uglify','htmlmin','imagemin']);
+    grunt.registerTask('default', ['jshint','copy:dist','cssmin', 'uglify','uglify','htmlmin','imagemin']);
 };
