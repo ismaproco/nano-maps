@@ -131,7 +131,14 @@ html, body {
 .infobox-image {
     display: block;
     margin: auto;
-} 
+}
+
+.additional-information {
+    background-color: rgba(0,0,0,0.7);
+    border-radius: 3px;
+    padding: 0 10px 0 10px;
+    margin-top: 3px;
+}
 
 /* Infobox Close button styles */
 .infoBoxClose {
