@@ -305,7 +305,9 @@ var ViewModel = function( markerTypes ) {
                     name: place.name ,
                     lat: place.geometry.location.k,
                     lng: place.geometry.location.D,
-                    type: self.getMarkerTypeByGoogle(place.types)
+                    type: self.getMarkerTypeByGoogle(place.types),
+                    metatags: place.types,
+                    rating: place.rating || ''
                 });
 
                 // add marker to the map view
@@ -346,8 +348,8 @@ var ViewModel = function( markerTypes ) {
             return markerTypes.bar;
         } else if( _.contains( types, 'movie_theater' ) ) {
             return markerTypes.movies;
-        } else if( _.contains( types, 'aquarium' ) ) {
-            return markerTypes.diving;
+        } else {
+            return markerTypes.none;
         }
     };
 
@@ -365,7 +367,8 @@ var ViewModel = function( markerTypes ) {
                 lat: place.location.latitude,
                 lng: place.location.longitude,
                 imageUrl: place.images.thumbnail.url,
-                type: markerTypes.instagram
+                type: markerTypes.instagram,
+                metatags: place.tags
             });
 
             // add marker to the map view
@@ -404,13 +407,15 @@ var ViewModel = function( markerTypes ) {
     this.foursquareAPICallback = function( results ) {
         if( results.response.venues ) {
             results.response.venues.forEach( function( venue ) {
-
                 // set the location properties
                 var location = new Location({
                     name: venue.name ,
                     lat: venue.location.lat,
                     lng: venue.location.lng,
-                    type: markerTypes.foursquare
+                    type: markerTypes.foursquare,
+                    address: venue.location.formattedAddress[0],
+                    phoneNumber: venue.contact.formattedPhone || '',
+                    metatags: []
                 });
 
                 // add marker to the map view
@@ -451,7 +456,65 @@ var ViewModel = function( markerTypes ) {
         .fail(function( msg ) {
             console.log('could not connect to foursquare to get locations.')
         });
+    };
+
+    //** Last.fm API Methods
+    //
+
+    // callback function for the last fm ajax request
+    this.lastFMCallback = function( results ) {
+        if( results.events.event) {
+            results.events.event.forEach( function( event ) {
+                // set the location properties
+                var location = new Location({
+                    name: event.venue.name ,
+                    lat: event.venue.location['geo:point']['geo:lat'],
+                    lng: event.venue.location['geo:point']['geo:long'],
+                    type: markerTypes.lastfm,
+                    address: event.venue.location.street,
+                    phoneNumber: event.venue.phonenumber || '',
+                    metatags: event.tags ? event.tags.tag : []
+                });
+
+                // add marker to the map view
+                self.addMarkerToView( 
+                        self.map, location,location.lat(), location.lng() );
+                // set the googleMarker parent as the respective location.
+                location.googleMarker().parent = location;
+                self.locations.push( location );
+            } )
+        }
     }
+
+    // ger a list of last fm places doing the ajax call
+    this.getListOfLastFMPlaces = function( ) {
+        // variable definitions
+        var url = 'http://ws.audioscrobbler.com/2.0/';
+        var api_key = '70796ff66b59bb96341f7c58d0f8c0ec';
+        var method = 'geo.getevents';
+        var format = 'json';
+        var lat = 52.2375111;
+        var lng = 21.0111977;
+
+        // do JSONP call to the Last FM api to get the list of locations
+        $.ajax({
+          method: 'GET',
+          url: url,
+          dataType: 'jsonp',
+          jsonp: 'callback',
+          data: { 
+                    api_key: api_key, 
+                    method: method, 
+                    format: format, 
+                    lat: lat, 
+                    long: lng 
+                }
+        })
+        .done( this.lastFMCallback )
+        .fail(function( msg ) {
+            console.log('could not connect to Last.FM to get locations.')
+        });
+    };
 
     //** Model initialization
     //
@@ -474,6 +537,9 @@ var ViewModel = function( markerTypes ) {
 
         // get foursquare places from the Foursquare API
         this.getListOfFoursquarePlaces( );
+
+        // get last fm event from the LastFM API
+        this.getListOfLastFMPlaces( );
     }
 
     //** About page
