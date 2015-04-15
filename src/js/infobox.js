@@ -125,7 +125,7 @@ function InfoBox(opt_opts) {
  */
 
 //check if the google library was loaded
-if( typeof( google ) !=  'undefined') {
+if( typeof( google ) !==  'undefined') {
   InfoBox.prototype = new google.maps.OverlayView();
 }
 

@@ -1,45 +1,45 @@
 // the main ViewModel
-var ViewModel = function( markerTypes ) {
+var ViewModel = function( definedMarkerTypes ) {
     var self = this;
-    var markerTypes = markerTypes || [];
+    var markerTypes = definedMarkerTypes || [];
     var bouncingMarker = {};
 
     // reference of the google map object
-    this.map = {};
+    self.map = {};
 
     // reference of the locations object
-    this.locations = ko.observableArray( );
-    this.warningMessageVisible = ko.observable( false );
-    this.warningMessage = ko.observable( 'The map could not be loaded' );
-    this.leftPanelIsVisible = ko.observable( true );
+    self.locations = ko.observableArray( );
+    self.warningMessageVisible = ko.observable( false );
+    self.warningMessage = ko.observable( 'The map could not be loaded' );
+    self.leftPanelIsVisible = ko.observable( true );
 
     // initialize the current and selected markers with empty objects
-    this.temporaryLocation = ko.observable( new Location( { } ) );
-    this.selectedLocation = ko.observable( new Location( { } ) );
+    self.temporaryLocation = ko.observable( new Location( { } ) );
+    self.selectedLocation = ko.observable( new Location( { } ) );
     // observable to store the filter value of the filtered textbox
-    this.filter = ko.observable('');
+    self.filter = ko.observable('');
 
     //** Map Operations
     //
 
     // set the loaded map
-    this.setMap = function ( map ) {
+    self.setMap = function ( map ) {
         self.map = map;
-    }
+    };
 
     // get the map
-    this.getMap = function ( ) {
+    self.getMap = function ( ) {
         return self.map;
-    }
+    };
 
     //** Marker Operations
     //
 
     // add a new marker to the observable array.
-    this.addMarker = function() {
+    self.addMarker = function() {
 
         // name is empty?
-        if( self.temporaryLocation().name().trim().length == 0 )
+        if( self.temporaryLocation().name().trim().length === 0 )
         {
             // set the value as 'no name'
             self.temporaryLocation().name('no name');
@@ -56,7 +56,7 @@ var ViewModel = function( markerTypes ) {
     };
 
     // steps to remove a marker
-    this.removeMarker = function() {
+    self.removeMarker = function() {
         // hide the infobox
         self.selectedLocation().googleMarker().$infobox.addClass('infobox-hide');
         //remove the marker from the map
@@ -66,12 +66,12 @@ var ViewModel = function( markerTypes ) {
     };
 
     // hide infobox of the selected location
-    this.hideInfobox = function() {
+    self.hideInfobox = function() {
         self.selectedLocation().googleMarker().$infobox.addClass('infobox-hide');
-    }
+    };
 
     // manage the map clicks
-    this.mapClick = function( map, event ) {
+    self.mapClick = function( map, event ) {
         var lat = event.latLng.lat();
         var lng = event.latLng.lng();
         // add a google marker to the map
@@ -81,7 +81,7 @@ var ViewModel = function( markerTypes ) {
     };
 
     // add maker to the map
-    this.addMarkerToView = function (map, location, lat, lng)
+    self.addMarkerToView = function (map, location, lat, lng)
     {
         // is there another marker in the map?
         if( !$.isEmptyObject( location.googleMarker() ) )
@@ -91,7 +91,7 @@ var ViewModel = function( markerTypes ) {
         }
 
         // set the small pin as the marker image
-        var pinImage = 'images/pin_small.png'
+        var pinImage = 'images/pin_small.png';
         
         location.lat( lat );
         location.lng( lng );
@@ -130,16 +130,16 @@ var ViewModel = function( markerTypes ) {
         
         // set the infobox options for the map
         var myOptions = {
-             content: marker.$infobox[0]
-            ,disableAutoPan: false
-            ,maxWidth: 0
+             content: marker.$infobox[0],
+            disableAutoPan: false,
+            maxWidth: 0,
             // set the infobox position left, top coordinates
-            ,pixelOffset: new google.maps.Size( -170, -180 )
-            ,zIndex: null
-            ,infoBoxClearance: new google.maps.Size(1, 1)
-            ,isHidden: false
-            ,pane: "floatPane"
-            ,enableEventPropagation: false
+            pixelOffset: new google.maps.Size( -170, -180 ),
+            zIndex: null,
+            infoBoxClearance: new google.maps.Size(1, 1),
+            isHidden: false,
+            pane: "floatPane",
+            enableEventPropagation: false,
         };
 
         // build the infobox with the options
@@ -149,10 +149,10 @@ var ViewModel = function( markerTypes ) {
         google.maps.event.addListener(marker, 'click', function( event ) {
             self.selectMarker( marker );
         } );
-    }
+    };
 
     // select the marker in the map
-    this.selectMarker = function( marker ) {
+    self.selectMarker = function( marker ) {
         // removes the hide class from the infobox
         marker.$infobox.removeClass('infobox-hide');
         // set the selected marker to show specific data in the infobox
@@ -161,7 +161,7 @@ var ViewModel = function( markerTypes ) {
         self.selectedLocation( marker.parent || self.temporaryLocation() );
         marker.ib.open(self.map, marker);
         // add bounce animation to the marker
-        if (marker.getAnimation() != null && marker != bouncingMarker ) {
+        if (marker.getAnimation() != null && marker !== bouncingMarker ) {
             marker.setAnimation(null);
         }
         else {
@@ -179,30 +179,30 @@ var ViewModel = function( markerTypes ) {
                         marker.getPosition().k  , marker.getPosition().D - 0.01);
         self.map.setCenter( mapPosition );
 
-    }
+    };
 
 
     // ** Locations methods
     //
 
     // set the type of the selected marker
-    this.setTypeSelectedLocation = function( markerType ) {
+    self.setTypeSelectedLocation = function( markerType ) {
         self.selectedLocation().type( markerType );
         self.selectedLocation().googleMarker().setIcon( markerType.url() );
     };
 
     // select the location    
-    this.selectLocation = function( location ) {
+    self.selectLocation = function( location ) {
         self.selectMarker( location.googleMarker() );
 
         // hides the left-bar if is in mobile
         if( $('.collapsed').is(':visible') ) {
             $("#wrapper").toggleClass('toggled');
         }
-    }
+    };
 
     // add locations array to the locations object
-    this.addLocationsToMap = function( locationsArray ) {
+    self.addLocationsToMap = function( locationsArray ) {
         locationsArray.forEach( function (location) {
             self.addMarkerToView( 
                         self.map, location,location.lat(), location.lng() );
@@ -214,27 +214,27 @@ var ViewModel = function( markerTypes ) {
     };
 
     // hides the left panel
-    this.toggleLeftPanel = function( ) {
+    self.toggleLeftPanel = function( ) {
         $("#wrapper").toggleClass('toggled');
         $('.navbar-collapse').collapse('hide');
-    }
+    };
 
     // ** Filter methods
     //
 
     // manage the keypress of the of the filter input
-    this.filterKeyPress = function( model, event) {
+    self.filterKeyPress = function( model, event) {
         self.filter(self.filter() +  String.fromCharCode( event.keyCode ) );
         // send the filter value to the filtering function
         self.filterLocations( self.filter() );
     };
 
-    this.filterKeyEvent = function( model, event ) {
+    self.filterKeyEvent = function( model, event ) {
         self.filterLocations( self.filter() );
     };
 
     // toggle visibility of locations by the filter text
-    this.filterLocations = function( text ) {
+    self.filterLocations = function( text ) {
         // text is initialize with empty array if input argument is empty
         text = text || '';
         // transform the text to lower case to be compared
@@ -262,7 +262,7 @@ var ViewModel = function( markerTypes ) {
     };
 
     //toggle visibility of locations by the type
-    this.filterLocationsByType = function( type ) { 
+    self.filterLocationsByType = function( type ) { 
         // hide infobox from the selected marker
         if( self.selectedLocation().googleMarker().$infobox ) {
             self.selectedLocation().googleMarker().$infobox.addClass('infobox-hide'); 
@@ -270,8 +270,8 @@ var ViewModel = function( markerTypes ) {
         // toggle the visibility of the location comparing the location's name
         // with the input text
         self.locations().forEach( function( location ) {
-            if( type.title() == markerTypes.none.title() || 
-                                        location.type().title() == type.title() ) {
+            if( type.title() === markerTypes.none.title() || 
+                                        location.type().title() === type.title() ) {
                 location.isVisible( true );
                 location.googleMarker().setMap( self.map );
             } 
@@ -293,9 +293,9 @@ var ViewModel = function( markerTypes ) {
     //
 
     // callback function of the Google API
-    this.googleAPICallback = function( results, status ) {
+    self.googleAPICallback = function( results, status ) {
         // the places library is enabled?
-        if (status == google.maps.places.PlacesServiceStatus.OK) {
+        if ( status === google.maps.places.PlacesServiceStatus.OK ) {
             // loop the results and create the locations
             for (var i = 0; i < results.length; i++) {
                 var place = results[i];
@@ -318,10 +318,10 @@ var ViewModel = function( markerTypes ) {
                 self.locations.push( location );
             }
         }
-    }
+    };
 
     // Get the list of google places
-    this.getListOfGooglePlaces = function( ) {
+    self.getListOfGooglePlaces = function( ) {
 
         var locationCoordinates = new google.maps.LatLng( 52.2375111 , 21.0111977 );
 
@@ -333,11 +333,11 @@ var ViewModel = function( markerTypes ) {
 
         service = new google.maps.places.PlacesService( self.map );
         // search for the first 20 places
-        service.nearbySearch( request, this.googleAPICallback );
+        service.nearbySearch( request, self.googleAPICallback );
     };
 
     // get marker type from google place type
-    this.getMarkerTypeByGoogle = function( types )
+    self.getMarkerTypeByGoogle = function( types )
     {
         // returns the markerType for the respective google place type 
         if( _.contains( types, 'restaurant' ) ) {
@@ -357,7 +357,7 @@ var ViewModel = function( markerTypes ) {
     //
 
     // callback function for the instagram API call.
-    this.instagramAPICallback = function( results ) {
+    self.instagramAPICallback = function( results ) {
         for (var i = 0; i < results.data.length; i++) {
             var place = results.data[i];
             
@@ -381,7 +381,7 @@ var ViewModel = function( markerTypes ) {
     };
 
     // get a list of the instagram places doing the ajax call
-    this.getListOfInstagramPlaces = function( ) {
+    self.getListOfInstagramPlaces = function( ) {
         var url = 'https://api.instagram.com/v1/media/search';
         var lat = 52.2375111;
         var lng = 21.0111977;
@@ -396,15 +396,15 @@ var ViewModel = function( markerTypes ) {
           jsonp: 'callback',
           data: { lat: lat, lng: lng, client_id: client, distance: distance }
         })
-        .done( this.instagramAPICallback )
+        .done( self.instagramAPICallback )
         .fail(function( msg ) {
-            console.log('could not connect to instagram to get the images.')
+            console.log('could not connect to instagram to get the images.');
         });
     };
 
     //** Foursquare API Methods
 
-    this.foursquareAPICallback = function( results ) {
+    self.foursquareAPICallback = function( results ) {
         if( results.response.venues ) {
             results.response.venues.forEach( function( venue ) {
                 // set the location properties
@@ -424,12 +424,12 @@ var ViewModel = function( markerTypes ) {
                 // set the googleMarker parent as the respective location.
                 location.googleMarker().parent = location;
                 self.locations.push( location );
-            } )
+            } );
         }
     };
 
     // get a list of the foursquare places doing the ajax call
-    this.getListOfFoursquarePlaces = function( ) {
+    self.getListOfFoursquarePlaces = function( ) {
         // variable definition
         var url = 'https://api.foursquare.com/v2/venues/search';
         var client_id = 'ZY2GSR1TAGZQDZQ0TRLIJ52VRCAOM0HWV4DPN413PIHW3RLQ';
@@ -452,9 +452,9 @@ var ViewModel = function( markerTypes ) {
                     query: query 
                 }
         })
-        .done( this.foursquareAPICallback )
+        .done( self.foursquareAPICallback )
         .fail(function( msg ) {
-            console.log('could not connect to foursquare to get locations.')
+            console.log('could not connect to foursquare to get locations.');
         });
     };
 
@@ -462,7 +462,7 @@ var ViewModel = function( markerTypes ) {
     //
 
     // callback function for the last fm ajax request
-    this.lastFMCallback = function( results ) {
+    self.lastFMCallback = function( results ) {
         if( results.events.event) {
             results.events.event.forEach( function( event ) {
                 // set the location properties
@@ -482,12 +482,12 @@ var ViewModel = function( markerTypes ) {
                 // set the googleMarker parent as the respective location.
                 location.googleMarker().parent = location;
                 self.locations.push( location );
-            } )
+            } );
         }
-    }
+    };
 
     // ger a list of last fm places doing the ajax call
-    this.getListOfLastFMPlaces = function( ) {
+    self.getListOfLastFMPlaces = function( ) {
         // variable definitions
         var url = 'http://ws.audioscrobbler.com/2.0/';
         var api_key = '70796ff66b59bb96341f7c58d0f8c0ec';
@@ -510,9 +510,9 @@ var ViewModel = function( markerTypes ) {
                     long: lng 
                 }
         })
-        .done( this.lastFMCallback )
+        .done( self.lastFMCallback )
         .fail(function( msg ) {
-            console.log('could not connect to Last.FM to get locations.')
+            console.log('could not connect to Last.FM to get locations.');
         });
     };
 
@@ -520,42 +520,42 @@ var ViewModel = function( markerTypes ) {
     //
 
     // build the markerType observable Array
-    this.markerTypes = ko.observableArray( Object.keys(markerTypes).map(function(key){
+    self.markerTypes = ko.observableArray( Object.keys(markerTypes).map(function(key){
         return markerTypes[key];
     }));
 
     // Initialize the model locations
-    this.initilizeLocations = function( ) {
+    self.initilizeLocations = function( ) {
         // add the default locations to the map
-        this.addLocationsToMap( defaultLocations );
+        self.addLocationsToMap( defaultLocations );
 
         // get google places from the API.
-        this.getListOfGooglePlaces( );
+        self.getListOfGooglePlaces( );
 
         // get instagram photo-places from the Instagram API
-        this.getListOfInstagramPlaces( );
+        self.getListOfInstagramPlaces( );
 
         // get foursquare places from the Foursquare API
-        this.getListOfFoursquarePlaces( );
+        self.getListOfFoursquarePlaces( );
 
         // get last fm event from the LastFM API
-        this.getListOfLastFMPlaces( );
-    }
+        self.getListOfLastFMPlaces( );
+    };
 
     //** About page
     //
 
-    this.showAboutMessage = function() {
+    self.showAboutMessage = function() {
         alert('NANODEGREE \nNano-Maps Project 5\n @ismapro 2015');
-    }
+    };
 
     //** Map loading validation
     //
 
-    this.mapTimeout = function( ) { 
+    self.mapTimeout = function( ) { 
 
             setTimeout(function(  ) {
-                if( typeof( google ) == 'undefined' ) {
+                if( typeof( google ) === 'undefined' ) {
                     self.warningMessageVisible( true );
                     // hides the left-bar
                     if( !$('#wrapper').hasClass('toggled') ) {
@@ -565,4 +565,4 @@ var ViewModel = function( markerTypes ) {
             }, 5000 );
     }();
 
-}
+};

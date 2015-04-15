@@ -131,4 +131,4 @@ var defaultLocations = [
         lng: 20.98840057067871,
         type: markerTypes.bar
     }),
-]
+];

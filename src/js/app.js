@@ -34,7 +34,7 @@ function initialize() {
 }
 
 //google library was loaded correctly?
-if( typeof( google ) != 'undefined' ) {
+if( typeof( google ) !== 'undefined' ) {
     // attach the initialize to the page load
     google.maps.event.addDomListener(window, 'load', initialize);    
 }
