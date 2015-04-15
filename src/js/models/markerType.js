@@ -1,10 +1,11 @@
 // Marker Type to show in the infobox menus
 function MarkerType( markerType ) {
+    var self = this;
     // set the attribute of the Model with observable objects
-    this.type = ko.observable( markerType.type || '' );
-    this.url = ko.observable( markerType.url || '');
-    this.title = ko.observable( markerType.title || '');
-    this.selection = ko.observable( markerType.selection || 'map' );
+    self.type = ko.observable( markerType.type || '' );
+    self.url = ko.observable( markerType.url || '');
+    self.title = ko.observable( markerType.title || '');
+    self.selection = ko.observable( markerType.selection || 'map' );
 }
 
 // Starting Marker Types 

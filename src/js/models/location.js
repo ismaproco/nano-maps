@@ -1,22 +1,23 @@
 // Marker model to show in the map
 function Location( marker )
 {
+    var self = this;
     // set the marker values with observable values
-    this.name = ko.observable ( marker.name || '' );
-    this.lat = ko.observable ( marker.lat || '' );
-    this.lng = ko.observable ( marker.lng || '' );
-    this.imageUrl = ko.observable ( marker.imageUrl || '' );
-    this.address = ko.observable( marker.address || '' );
-    this.phoneNumber = ko.observable( marker.phoneNumber || '');
-    this.rating = ko.observable( marker.rating || '');
-    this.metatags = ko.observable( marker.metatags || [] );
-    this.meta = ko.computed( function( ){ 
-        return this.metatags().join(', ');
-    }, this);
+    self.name = ko.observable ( marker.name || '' );
+    self.lat = ko.observable ( marker.lat || '' );
+    self.lng = ko.observable ( marker.lng || '' );
+    self.imageUrl = ko.observable ( marker.imageUrl || '' );
+    self.address = ko.observable( marker.address || '' );
+    self.phoneNumber = ko.observable( marker.phoneNumber || '');
+    self.rating = ko.observable( marker.rating || '');
+    self.metatags = ko.observable( marker.metatags || [] );
+    self.meta = ko.computed( function( ){ 
+        return self.metatags().join(', ');
+    }, self);
     // set the default markerType as none
-    this.type = ko.observable ( marker.type || markerTypes.none );
-    this.googleMarker = ko.observable ( marker.googleMarker || {} );
-    this.isVisible = ko.observable( true );
+    self.type = ko.observable ( marker.type || markerTypes.none );
+    self.googleMarker = ko.observable ( marker.googleMarker || {} );
+    self.isVisible = ko.observable( true );
 }
 
 // Starting Markers 
